@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 permissions:
@@ -44,8 +43,11 @@ jobs:
           echo "=== HTML files ==="
           find dist/client -type f -name "*.html" -print
 
-          echo "=== Client files ==="
-          find dist/client -maxdepth 3 -type f | sort | head -100
+          echo "=== index.html asset paths ==="
+          grep -oE '(src|href)="[^"]+"' dist/client/index.html | head -50 || true
+
+          echo "=== _next files ==="
+          find dist/client/_next -maxdepth 3 -type f | head -50 || true
 
           test -f dist/client/index.html
 
