@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 permissions:
@@ -40,11 +41,11 @@ jobs:
 
       - name: Verify build output
         run: |
-          echo "=== next.config.ts ==="
-          cat next.config.ts
-
           echo "=== HTML files ==="
           find dist/client -type f -name "*.html" -print
+
+          echo "=== Client files ==="
+          find dist/client -maxdepth 3 -type f | sort | head -100
 
           test -f dist/client/index.html
 
