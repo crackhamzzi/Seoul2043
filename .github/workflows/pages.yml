@@ -40,8 +40,12 @@ jobs:
 
       - name: Verify build output
         run: |
-          echo "=== dist files ==="
-          find dist -maxdepth 3 -type f | sort | head -100
+          echo "=== next.config.ts ==="
+          cat next.config.ts
+
+          echo "=== HTML files ==="
+          find dist/client -type f -name "*.html" -print
+
           test -f dist/client/index.html
 
       - name: Disable Jekyll
