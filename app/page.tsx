@@ -701,7 +701,7 @@ export default function Home() {
               <span>{activeCharacterData.name}{" // "}SCENE {String(lightboxImage.index + 1).padStart(2, "0")}</span>
               <button onClick={() => setLightboxImage(null)} aria-label="확대 이미지 닫기">닫기 <b>×</b></button>
             </div>
-            <img src={lightboxImage.src} alt={`${activeCharacterData.name} 장면 ${lightboxImage.index + 1} 확대 이미지`} />
+            <img src={assetPath(lightboxImage.src)} alt={`${activeCharacterData.name} 장면 ${lightboxImage.index + 1} 확대 이미지`} />
             <p>이미지 바깥을 클릭하거나 ESC 키를 누르면 닫힙니다.</p>
           </div>
         </div>
