@@ -40,17 +40,26 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
-    base: "/Seoul2043/",
-
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
 
     plugins: [
-      vinext(),
+      vinext({
+        nextConfig: {
+          output: "export",
+          basePath: "/Seoul2043",
+          trailingSlash: true,
+        },
+      }),
+
       sites(),
+
       cloudflare({
-        viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
+        viteEnvironment: {
+          name: "rsc",
+          childEnvironments: ["ssr"],
+        },
         config: localBindingConfig,
       }),
     ],
