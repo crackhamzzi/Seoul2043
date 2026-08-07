@@ -1,0 +1,47 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.6.2
+2 info using node@v24.12.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\kgh\Documents\Codex\2026-08-06\https-arcadiais-pages-dev-https-arcadiais\.npmrc
+5 silly config load:file:C:\Users\kgh\.npmrc
+6 silly config load:file:C:\Users\kgh\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm uninstall react-loading-skeleton
+8 verbose argv "uninstall" "react-loading-skeleton" "--no-audit"
+9 verbose logfile logs-max:10 dir:C:\Users\kgh\Documents\Codex\2026-08-06\https-arcadiais-pages-dev-https-arcadiais\work\npm-cache\_logs\2026-08-06T08_52_59_477Z-
+10 verbose logfile C:\Users\kgh\Documents\Codex\2026-08-06\https-arcadiais-pages-dev-https-arcadiais\work\npm-cache\_logs\2026-08-06T08_52_59_477Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 verbose shrinkwrap failed to load node_modules/.package-lock.json out of date, updated: node_modules
+14 silly idealTree buildDeps
+15 silly fetch manifest @emnapi/runtime@^1.7.0
+16 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fruntime cache-miss
+17 http fetch GET 200 https://registry.npmjs.org/@emnapi%2fruntime 215ms (cache miss)
+18 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fruntime set size:undefined disposed:false
+19 silly placeDep ROOT @emnapi/runtime@1.11.3 OK for: @img/sharp-wasm32@0.34.5 want: ^1.7.0
+20 silly fetch manifest @emnapi/core@1.10.0
+21 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fcore cache-miss
+22 http fetch GET 200 https://registry.npmjs.org/@emnapi%2fcore 41ms (cache miss)
+23 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fcore set size:undefined disposed:false
+24 silly fetch manifest @emnapi/runtime@1.10.0
+25 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fruntime cache-miss
+26 http cache https://registry.npmjs.org/@emnapi%2fruntime 10ms (cache hit)
+27 silly packumentCache full:https://registry.npmjs.org/@emnapi%2fruntime set size:122916 disposed:false
+28 silly placeDep ROOT @emnapi/core@1.10.0 OK for: @rolldown/binding-wasm32-wasi@1.0.1 want: 1.10.0
+29 silly placeDep node_modules/@rolldown/binding-wasm32-wasi @emnapi/runtime@1.10.0 OK for: @rolldown/binding-wasm32-wasi@1.0.1 want: 1.10.0
+30 silly reify mark retired [
+30 silly reify   'C:\\Users\\kgh\\Documents\\Codex\\2026-08-06\\https-arcadiais-pages-dev-https-arcadiais\\node_modules\\react-loading-skeleton'
+30 silly reify ]
+31 silly reify moves {
+31 silly reify   'C:\\Users\\kgh\\Documents\\Codex\\2026-08-06\\https-arcadiais-pages-dev-https-arcadiais\\node_modules\\react-loading-skeleton': 'C:\\Users\\kgh\\Documents\\Codex\\2026-08-06\\https-arcadiais-pages-dev-https-arcadiais\\node_modules\\.react-loading-skeleton-dc8OIqyG'
+31 silly reify }
+32 http cache @emnapi/runtime@https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.11.3.tgz 1ms (cache hit)
+33 silly tarball no local data for @emnapi/runtime@https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.11.3.tgz. Extracting by manifest.
+34 http fetch GET 200 https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.11.3.tgz 69ms (cache miss)
+35 silly ADD node_modules/@emnapi/runtime
+36 silly REMOVE node_modules/react-loading-skeleton
+37 verbose cwd C:\Users\kgh\Documents\Codex\2026-08-06\https-arcadiais-pages-dev-https-arcadiais
+38 verbose os Windows_NT 10.0.26200
+39 verbose node v24.12.0
+40 verbose npm  v11.6.2
+41 verbose exit 0
+42 info ok

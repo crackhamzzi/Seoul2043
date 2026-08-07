@@ -1,0 +1,22 @@
+0000000000000000000000000000000000000000 daab85b6f1c7da14c0305d55027678352b5c113c Codex <codex@openai.com> 1786006562 +0900	commit (initial): Build Seoul 2043 world archive
+daab85b6f1c7da14c0305d55027678352b5c113c 6f656ae0ed2d8be59075d7b2d71da47dd5ed189d Codex <codex@openai.com> 1786007368 +0900	commit: Convert archive sections to tabs
+6f656ae0ed2d8be59075d7b2d71da47dd5ed189d ee4ff27316fa0b81d79941d22e9c219f96c3f54e Codex <codex@openai.com> 1786008364 +0900	commit: Add interactive Seoul city map
+ee4ff27316fa0b81d79941d22e9c219f96c3f54e 88b69c1183d4000c89d3b74a90409a011602a7d8 Codex <codex@openai.com> 1786009034 +0900	commit: Expand complete character archive
+88b69c1183d4000c89d3b74a90409a011602a7d8 40867fb6c07c79d4c3c7359fc8ba60dc13c02911 Codex <codex@openai.com> 1786010018 +0900	commit: Add location resident previews
+40867fb6c07c79d4c3c7359fc8ba60dc13c02911 0aeb38f87c0753ce3a9b2e0c086aefb775e6b698 Codex <codex@openai.com> 1786010339 +0900	commit: Relocate red-light district
+0aeb38f87c0753ce3a9b2e0c086aefb775e6b698 6e3a066cf0750c10284993f3143a164d1cd42dcd Codex <codex@openai.com> 1786010655 +0900	commit: Stabilize location preview height
+6e3a066cf0750c10284993f3143a164d1cd42dcd 8f762a5212a8e5f5a5160eacbb6057119a790b51 Codex <codex@openai.com> 1786012264 +0900	commit: Add character profile portraits
+8f762a5212a8e5f5a5160eacbb6057119a790b51 5c756097b9a97f16d8f229ef01de78a10765eb10 Codex <codex@openai.com> 1786012723 +0900	commit: Refine two portrait crops
+5c756097b9a97f16d8f229ef01de78a10765eb10 2f2e7515dbb05a28a76882de6deb01e8e7a4f964 Codex <codex@openai.com> 1786013729 +0900	commit: Add Hana scene gallery
+2f2e7515dbb05a28a76882de6deb01e8e7a4f964 97ff2b160afd8c59db1766e4609e742d12efacbd Codex <codex@openai.com> 1786014111 +0900	commit: Widen character dossier layout
+97ff2b160afd8c59db1766e4609e742d12efacbd 9559389a7c970860156fe466e97afafd1a4d581f Codex <codex@openai.com> 1786014421 +0900	commit: Add breathing room to scene gallery
+9559389a7c970860156fe466e97afafd1a4d581f 91c160e687cddcaa626e94165408c7d0fc671aaf Codex <codex@openai.com> 1786014728 +0900	commit: Enlarge character interface labels
+91c160e687cddcaa626e94165408c7d0fc671aaf 0ccfa2d190908053cc4940b5e449740a36bae8ff Codex <codex@openai.com> 1786015440 +0900	commit: Add character scene galleries
+0ccfa2d190908053cc4940b5e449740a36bae8ff 14cd93104680091097e1cb8a8707616b7e625ad7 Gihyeon <302276461+crackhamzzi@users.noreply.github.com> 1786015878 +0900	commit: Add remaining character galleries
+14cd93104680091097e1cb8a8707616b7e625ad7 ca88dd2a87f8a8928a761f5ab7078de78c6e8724 Gihyeon <302276461+crackhamzzi@users.noreply.github.com> 1786016559 +0900	commit: Enlarge archive header and add image lightbox
+ca88dd2a87f8a8928a761f5ab7078de78c6e8724 281f217d71bce89c4ab5e37600137f84da6d83ae Gihyeon <302276461+crackhamzzi@users.noreply.github.com> 1786017631 +0900	commit: Add Seoul history archive and scale typography
+281f217d71bce89c4ab5e37600137f84da6d83ae 9211687141c30e9e756a697e69da62fa38403910 Gihyeon <302276461+crackhamzzi@users.noreply.github.com> 1786018693 +0900	commit: Refine map hover profiles and character records
+9211687141c30e9e756a697e69da62fa38403910 ce3b9f231b3279335db3a6410a4a96984a27a9f9 Gihyeon <302276461+crackhamzzi@users.noreply.github.com> 1786019423 +0900	commit: Add animated archive transmission
+ce3b9f231b3279335db3a6410a4a96984a27a9f9 73ea8946d3a95f6e9df83e33a11d01656057721c Gihyeon <302276461+crackhamzzi@users.noreply.github.com> 1786020050 +0900	commit: Expand transparent memory text field
+73ea8946d3a95f6e9df83e33a11d01656057721c 350ccc2b2ed4b41d9868eea6da8e03d88b3ac789 Gihyeon <302276461+crackhamzzi@users.noreply.github.com> 1786020644 +0900	commit: Intensify critical memory errors
+350ccc2b2ed4b41d9868eea6da8e03d88b3ac789 b0ed310ecbe58438c7ed759aded3bc722ddb7814 Gihyeon <302276461+crackhamzzi@users.noreply.github.com> 1786022931 +0900	commit: Redesign world archive and add Logan gallery
