@@ -69,10 +69,12 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
   const [muted, setMuted] = useState(false);
   const [finaleStage, setFinaleStage] = useState(0);
   const [handoffActive, setHandoffActive] = useState(false);
+  const [visibleVoiceCount, setVisibleVoiceCount] = useState(0);
   const [reducedMotion] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
   const sequenceTimers = useRef<Set<number>>(new Set());
+  const voiceTimers = useRef<Set<number>>(new Set());
   const finaleTimers = useRef<Set<number>>(new Set());
   const gainRef = useRef<GainNode | null>(null);
   const handoffStarted = useRef(false);
@@ -105,6 +107,18 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
 
     return () => clearTimers(timers);
   }, [reducedMotion]);
+
+  useEffect(() => {
+    if (scene !== "condemnation") return;
+    const timers = voiceTimers.current;
+
+    voices.forEach((voice, index) => {
+      const timer = window.setTimeout(() => setVisibleVoiceCount(index + 1), voice.delayMs);
+      timers.add(timer);
+    });
+
+    return () => clearTimers(timers);
+  }, [scene, voices]);
 
   useEffect(() => {
     if (scene !== "finale") return;
@@ -291,15 +305,15 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
         <div className="pv-voice-cloud">
           {voices.map((voice, index) => (
             <p
-              className="pv-voice"
+              className={`pv-voice ${index < visibleVoiceCount ? "is-visible" : ""}`}
               data-source={voice.speaker}
+              aria-hidden={index >= visibleVoiceCount}
               key={`${voice.speaker}-${voice.text}`}
               style={{
                 "--pv-x": `${voice.x}%`,
                 "--pv-y": `${voice.y}%`,
                 "--pv-depth": `${voice.depth}px`,
                 "--pv-rotation": `${voice.rotation}deg`,
-                "--pv-type-delay": `${voice.delayMs}ms`,
                 "--pv-type-duration": `${Math.max(420, voice.text.length * voice.speedMs)}ms`,
                 "--pv-steps": voice.text.length,
                 "--pv-drift": `${5.2 + (index % 5) * 0.7}s`,

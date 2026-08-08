@@ -65,3 +65,15 @@ test("keeps Logan assets and the full-field error effect connected", async () =>
   assert.doesNotMatch(css, /critical-line-jump/);
   assert.doesNotMatch(page, /scroll-marker/);
 });
+
+test("drives condemnation visibility from React state instead of an opacity animation", async () => {
+  const [component, css] = await Promise.all([
+    readFile(new URL("../app/PvExperience.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(component, /visibleVoiceCount/);
+  assert.match(component, /index < visibleVoiceCount \? "is-visible" : ""/);
+  assert.match(css, /\.pv-scene--condemnation\.is-active \.pv-voice\.is-visible \{[^}]*opacity:\s*\.9/s);
+  assert.doesNotMatch(css, /pv-voice-appear/);
+});
