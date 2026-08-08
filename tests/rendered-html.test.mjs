@@ -91,7 +91,7 @@ test("ships Hana-rooted stat and relationship tabs with the supplied relationshi
   assert.match(page, /"이소현": \{ x: 15, y: 66 \}/);
   assert.match(page, /from: "제니", to: "정하은"[^\n]*mapLabel: \["고정 신뢰 없음", "강한 의존"\][^\n]*labelShiftY: -88/);
   assert.match(css, /\.relationship-edge-label\.is-multiline \{[^}]*line-height:\s*1\.18[^}]*text-align:\s*center/s);
-  assert.match(css, /\.relationship-node\.is-muted \{[^}]*opacity:\s*\.08/s);
+  assert.match(css, /\.relationship-node\.is-muted \{[^}]*opacity:\s*\.2[^}]*grayscale\(\.72\)[^}]*brightness\(\.68\)/s);
   assert.match(css, /\.relationship-legend span \{[^}]*gap:\s*21px[^}]*font:\s*650 30px\/1/s);
   assert.match(css, /\.relationship-legend i \{[^}]*width:\s*63px[^}]*height:\s*6px/s);
   assert.match(css, /\.relationship-records \{[^}]*grid-auto-rows:\s*minmax\(124px,1fr\)/s);

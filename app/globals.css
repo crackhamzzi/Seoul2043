@@ -380,7 +380,7 @@ button { color: inherit; }
 .relationship-node.is-root { width: 136px; }
 .relationship-node.is-root > span { width: 94px; height: 94px; border-width: 3px; box-shadow: 0 0 0 7px rgba(4,9,14,.9),0 0 0 8px color-mix(in srgb,var(--profile) 30%,transparent),0 0 42px color-mix(in srgb,var(--profile) 38%,transparent); }
 .relationship-node.is-root > b { margin-top: 12px; font-size: 20px; }.relationship-node.is-root > small { color: var(--cyan); font-size: 9px; }
-.relationship-node.is-muted { opacity: .08; filter: grayscale(1) brightness(.38); }
+.relationship-node.is-muted { opacity: .2; filter: grayscale(.72) brightness(.68); }
 
 .relationship-inspector { --profile: var(--cyan); display: grid; grid-template-columns: minmax(300px,.42fr) minmax(0,1.58fr); border-top: 1px solid rgba(100,155,174,.25); background: rgba(4,8,13,.94); }
 .relationship-inspector-profile { padding: 28px 30px; display: grid; grid-template-columns: 86px 1fr; gap: 10px 20px; align-items: center; border-right: 1px solid var(--line); }
@@ -407,7 +407,7 @@ button { color: inherit; }
   .relationship-node, .relationship-node.is-root { position: relative; left: auto; top: auto; width: auto; min-width: 0; min-height: 112px; padding: 14px 8px; border: 1px solid rgba(106,145,158,.16); background: rgba(7,12,18,.8); transform: none; }
   .relationship-node:hover, .relationship-node:focus-visible { transform: translateY(-2px); }.relationship-node.is-root { grid-column: 1 / -1; }
   .relationship-node > span, .relationship-node.is-root > span { width: 58px; height: 58px; border-width: 2px; box-shadow: 0 0 0 4px rgba(4,9,14,.85),0 0 18px color-mix(in srgb,var(--profile) 18%,transparent); }
-  .relationship-node.is-root > b { font-size: 16px; }.relationship-node.is-muted { opacity: .14; }
+  .relationship-node.is-root > b { font-size: 16px; }.relationship-node.is-muted { opacity: .28; }
   .relationship-inspector { grid-template-columns: 1fr; }.relationship-inspector-profile { border-right: 0; border-bottom: 1px solid var(--line); }.relationship-records { grid-template-columns: 1fr; }
 }
 
