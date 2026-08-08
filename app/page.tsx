@@ -799,7 +799,7 @@ export default function Home() {
                   const isConnected = focusedRelationships.some((relationship) => relationship.from === character.name || relationship.to === character.name);
                   return (
                     <button
-                      className={`relationship-node tone-${alignmentTone[character.alignment]} ${character.name === "하나" ? "is-root" : ""} ${isActive ? "active" : ""} ${relationshipFocus !== "하나" && !isActive && !isConnected ? "is-muted" : ""}`}
+                      className={`relationship-node tone-${alignmentTone[character.alignment]} ${character.name === "하나" ? "is-root" : ""} ${isActive ? "active" : ""} ${!isActive && !isConnected ? "is-muted" : ""}`}
                       type="button"
                       aria-label={`${character.name} 관계 보기`}
                       aria-pressed={isActive}
@@ -819,7 +819,7 @@ export default function Home() {
                 <div className="relationship-inspector-profile">
                   <span><img src={assetPath(characterPortraits[focusedRelationshipCharacter.name])} alt="" /></span>
                   <div><small>SELECTED IDENTITY</small><h3>{focusedRelationshipCharacter.name}</h3><p>{focusedRelationshipCharacter.affiliation}<i>{" // "}</i>{focusedRelationshipCharacter.role}</p></div>
-                  <button type="button" onClick={() => openCharacter(focusedRelationshipCharacter.name)}>스텟 보기 <b>→</b></button>
+                  <button type="button" onClick={() => openCharacter(focusedRelationshipCharacter.name)}>인물 자세히 보기 <b>→</b></button>
                 </div>
                 <ul className="relationship-records">
                   {focusedRelationships.map((relationship) => {

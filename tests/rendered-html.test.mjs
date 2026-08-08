@@ -58,8 +58,19 @@ test("ships Hana-rooted stat and relationship tabs with the supplied relationshi
   assert.match(page, /FIB 파트너 · 상호 긴장/);
   assert.match(page, /추적자 · 숙적/);
   assert.match(page, /하나 중심 인물 관계도/);
+  assert.match(page, /!isActive && !isConnected \? "is-muted" : ""/);
+  assert.doesNotMatch(page, /relationshipFocus !== "하나" && !isActive/);
+  assert.match(page, />인물 자세히 보기 <b>→<\/b><\/button>/);
   assert.match(css, /\.world-brief p \{[^}]*line-height:\s*1\.95/s);
   assert.match(css, /\.relationship-node\.is-root > span \{[^}]*width:\s*94px[^}]*height:\s*94px/s);
+  assert.match(css, /\.relationship-edge \{[^}]*height:\s*4px[^}]*opacity:\s*\.05/s);
+  assert.match(css, /\.relationship-edge\.is-active \{[^}]*height:\s*8px[^}]*opacity:\s*1/s);
+  assert.match(css, /\.relationship-edge > i \{[^}]*font:\s*800 32px\/1/s);
+  assert.match(css, /\.relationship-node\.is-muted \{[^}]*opacity:\s*\.08/s);
+  assert.match(css, /\.relationship-records \{[^}]*grid-auto-rows:\s*minmax\(124px,1fr\)/s);
+  assert.match(css, /\.relationship-records li:last-child:nth-child\(odd\) \{[^}]*grid-column:\s*1 \/ -1/s);
+  assert.match(css, /\.relationship-records li button \{[^}]*font-size:\s*16px/s);
+  assert.match(css, /\.relationship-records li p \{[^}]*font-size:\s*14px/s);
 });
 
 test("ships the PV background and transparent finale logo", async () => {
