@@ -434,7 +434,12 @@ export default function Home() {
   return (
     <main id="top">
       {!introHidden && (
-        <section className={`entry-screen ${entered ? "entry-screen--exit" : ""}`} aria-label="서울 2043 진입 화면">
+        <section
+          className={`entry-screen ${entered ? "entry-screen--exit" : ""}`}
+          aria-label="서울 2043 진입 화면"
+          aria-hidden={pvOpen || undefined}
+          inert={pvOpen || undefined}
+        >
           <div className="entry-noise" aria-hidden="true" />
           <div className="entry-coordinates" aria-hidden="true">37.5665° N<br />126.9780° E</div>
           <div className="entry-signal" aria-hidden="true"><i /><span>NETWORK ONLINE</span></div>
@@ -461,7 +466,7 @@ export default function Home() {
         />
       )}
 
-      <div className={`site-shell tab-${activeTab}`}>
+      <div className={`site-shell tab-${activeTab}`} aria-hidden={pvOpen || undefined} inert={pvOpen || undefined}>
         <header className="topbar">
           <button className="brand" onClick={() => changeTab("home")} aria-label="홈 화면으로 이동">
             <img src={assetPath("/seoul-2043-logo.png")} alt="서울 2043" />

@@ -80,7 +80,7 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
   const overlayCompleted = useRef(false);
   const callbacks = useRef({ onCancel, onEnterSite, onComplete });
 
-  const voices = useMemo(() => getCondemnationVoices() as CondemnationVoice[], []);
+  const voices = useMemo(() => getCondemnationVoices(reducedMotion) as CondemnationVoice[], [reducedMotion]);
   const whyPlan = useMemo(() => getWhyPlan(104, reducedMotion) as WhyItem[], [reducedMotion]);
   const questionLines = useMemo(() => getQuestionLines() as [string, string], []);
   const endingLines = useMemo(() => getEndingLines() as [string, string], []);
@@ -262,7 +262,7 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
         <h2>감정은 안전하게 통제됩니다.</h2>
         <div className="pv-command-lines">
           {commandLines.map((line, index) => (
-            <p key={line} style={{ "--pv-line-delay": `${0.35 + index * 0.52}s`, "--pv-steps": line.length } as CSSProperties}>{line}</p>
+            <p key={line} style={{ "--pv-line-delay": `${(0.35 + index * 0.52) * (reducedMotion ? 0.25 : 1)}s`, "--pv-steps": line.length } as CSSProperties}>{line}</p>
           ))}
         </div>
       </article>
@@ -276,7 +276,7 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
             className={`pv-reflection-copy ${line.className}`}
             data-label={line.label}
             key={line.label}
-            style={{ "--pv-line-delay": `${0.15 + index * 0.72}s`, "--pv-steps": line.text.length } as CSSProperties}
+            style={{ "--pv-line-delay": `${(0.15 + index * 0.72) * (reducedMotion ? 0.25 : 1)}s`, "--pv-steps": line.text.length } as CSSProperties}
           >
             {line.text}
           </p>

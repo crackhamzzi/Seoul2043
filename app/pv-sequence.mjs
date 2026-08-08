@@ -36,8 +36,13 @@ const REDUCED_TIMELINE = [
   { scene: "finale", atMs: 9800 },
 ];
 
-export function getCondemnationVoices() {
-  return CONDEMNATION_VOICES.map((voice) => ({ ...voice }));
+export function getCondemnationVoices(reducedMotion = false) {
+  const delayScale = reducedMotion ? 0.28 : 1;
+  return CONDEMNATION_VOICES.map((voice) => ({
+    ...voice,
+    delayMs: Math.round(voice.delayMs * delayScale),
+    speedMs: reducedMotion ? Math.max(18, Math.round(voice.speedMs * 0.5)) : voice.speedMs,
+  }));
 }
 
 export function getQuestionLines() {

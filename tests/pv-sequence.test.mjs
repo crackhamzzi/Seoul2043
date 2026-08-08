@@ -113,3 +113,13 @@ test("finishes every reduced-motion question before the finale begins", () => {
 
   assert.ok(latestQuestionEndMs < whyWindowMs);
 });
+
+test("starts every reduced-motion condemnation before the silence scene", () => {
+  const timeline = getPvTimeline(true);
+  const condemnationStartMs = timeline.find(({ scene }) => scene === "condemnation").atMs;
+  const silenceStartMs = timeline.find(({ scene }) => scene === "silence").atMs;
+  const condemnationWindowMs = silenceStartMs - condemnationStartMs;
+  const latestVoiceStartMs = Math.max(...getCondemnationVoices(true).map(({ delayMs }) => delayMs));
+
+  assert.ok(latestVoiceStartMs < condemnationWindowMs);
+});
