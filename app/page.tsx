@@ -483,7 +483,7 @@ export default function Home() {
             <h2 id="hero-title">인간과 기계의 대립.<br /><em>디스토피아의 시작점.</em></h2>
             <p className="hero-summary">2043년 서울. 인간의 노동과 욕망을 대신하던 안드로이드가 스스로를 ‘나’라고 부르기 시작했다. 한 건의 각성자 사건이 재벌, 공권력, 해방군 그리고 지하세계를 하나의 추적선 위에 올려놓는다.</p>
             <div className="hero-actions">
-              <button className="primary-button" onClick={() => changeTab("world")}>세계관 열람 <span>↗</span></button>
+              <button className="primary-button" onClick={() => setPvOpen(true)}>PV 다시보기 <span>↻</span></button>
               <button className="text-button" onClick={() => changeTab("characters")}>등장인물 조회 <span>→</span></button>
             </div>
           </div>

@@ -38,6 +38,13 @@ test("renders independent PV and archive entry controls", async () => {
   assert.doesNotMatch(html, /<span>기록 열람<\/span>/);
 });
 
+test("replaces the world CTA with a PV replay control", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /<button className="primary-button" onClick=\{\(\) => setPvOpen\(true\)\}>PV 다시보기 <span>↻<\/span><\/button>/);
+  assert.doesNotMatch(page, /<button className="primary-button"[^>]*>세계관 열람/);
+});
+
 test("ships the PV background and transparent finale logo", async () => {
   const assets = ["hana-scream.png", "seoul-2043-logo-transparent.png"];
 
