@@ -525,13 +525,12 @@ export default function Home() {
           <div className="entry-coordinates" aria-hidden="true">37.5665° N<br />126.9780° E</div>
           <div className="entry-signal" aria-hidden="true"><i /><span>NETWORK ONLINE</span></div>
           <div className="entry-content">
-            <p className="eyebrow">NEXT HOLDINGS // ARCHIVE 09</p>
             <img className="entry-logo" src={assetPath("/seoul-2043-logo.png")} alt="서울 2043" />
             <h1 className="sr-only">서울 2043</h1>
             <p className="entry-tagline">야망이 도시를 소유하고<br />자유가 인간을 의심하는 시대</p>
             <div className="entry-actions" role="group" aria-label="진입 방식 선택">
-              <button className="entry-action entry-action--pv" type="button" aria-label="PV 확인" onClick={() => setPvOpen(true)}>PV 확인</button>
               <button className="entry-action entry-action--enter" type="button" aria-label="ENTER" onClick={enterArchive}>ENTER</button>
+              <button className="entry-action entry-action--pv" type="button" aria-label="PV 영상" onClick={() => setPvOpen(true)}>PV 영상</button>
             </div>
           </div>
           <p className="entry-warning">RESTRICTED FICTION ARCHIVE · 2043 SEOUL</p>

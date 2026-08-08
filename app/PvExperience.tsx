@@ -66,7 +66,6 @@ function clearTimers(timers: Set<number>) {
 
 export default function PvExperience({ assetPath, onCancel, onEnterSite, onComplete }: PvExperienceProps) {
   const [scene, setScene] = useState<PvScene>("command");
-  const [muted, setMuted] = useState(false);
   const [finaleStage, setFinaleStage] = useState(0);
   const [handoffActive, setHandoffActive] = useState(false);
   const [visibleVoiceCount, setVisibleVoiceCount] = useState(0);
@@ -76,7 +75,6 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
   const sequenceTimers = useRef<Set<number>>(new Set());
   const voiceTimers = useRef<Set<number>>(new Set());
   const finaleTimers = useRef<Set<number>>(new Set());
-  const gainRef = useRef<GainNode | null>(null);
   const handoffStarted = useRef(false);
   const archiveEntered = useRef(false);
   const overlayCompleted = useRef(false);
@@ -173,58 +171,6 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
     };
   }, []);
 
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    let context: AudioContext | null = null;
-    let lowDrone: OscillatorNode | null = null;
-    let tensionDrone: OscillatorNode | null = null;
-
-    try {
-      context = new AudioContext();
-      const gain = context.createGain();
-      const filter = context.createBiquadFilter();
-      lowDrone = context.createOscillator();
-      tensionDrone = context.createOscillator();
-
-      lowDrone.type = "sine";
-      lowDrone.frequency.value = 43;
-      tensionDrone.type = "sawtooth";
-      tensionDrone.frequency.value = 86;
-      filter.type = "lowpass";
-      filter.frequency.value = 310;
-      gain.gain.value = 0.032;
-
-      lowDrone.connect(filter);
-      tensionDrone.connect(filter);
-      filter.connect(gain).connect(context.destination);
-      lowDrone.start();
-      tensionDrone.start();
-      gainRef.current = gain;
-      void context.resume().catch(() => undefined);
-    } catch {
-      gainRef.current = null;
-    }
-
-    return () => {
-      gainRef.current = null;
-      try {
-        lowDrone?.stop();
-        tensionDrone?.stop();
-      } catch {
-        // Oscillators can already be stopped by the browser during teardown.
-      }
-      void context?.close().catch(() => undefined);
-    };
-  }, [reducedMotion]);
-
-  useEffect(() => {
-    const gain = gainRef.current;
-    if (!gain) return;
-    const nextLevel = muted ? 0.0001 : scene === "why" ? 0.075 : scene === "finale" ? 0.018 : 0.032;
-    gain.gain.setTargetAtTime(nextLevel, gain.context.currentTime, 0.08);
-  }, [muted, scene]);
-
   const cancel = () => {
     if (handoffStarted.current) return;
     clearTimers(sequenceTimers.current);
@@ -261,9 +207,6 @@ export default function PvExperience({ assetPath, onCancel, onEnterSite, onCompl
       </header>
 
       <div className="pv-controls">
-        <button type="button" onClick={() => setMuted((value) => !value)} aria-pressed={muted}>
-          SOUND {muted ? "OFF" : "ON"}
-        </button>
         {!handoffActive && scene !== "finale" && <button type="button" onClick={skipToFinale}>SKIP</button>}
         {!handoffActive && <button type="button" onClick={cancel} aria-label="PV 닫기">CLOSE</button>}
       </div>

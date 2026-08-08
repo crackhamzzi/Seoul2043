@@ -33,8 +33,10 @@ test("renders independent PV and archive entry controls", async () => {
   const html = await response.text();
 
   assert.match(html, /role="group" aria-label="진입 방식 선택"/);
-  assert.match(html, /<button[^>]*class="entry-action entry-action--pv"[^>]*aria-label="PV 확인"[^>]*>PV 확인<\/button>/);
   assert.match(html, /<button[^>]*class="entry-action entry-action--enter"[^>]*aria-label="ENTER"[^>]*>ENTER<\/button>/);
+  assert.match(html, /<button[^>]*class="entry-action entry-action--pv"[^>]*aria-label="PV 영상"[^>]*>PV 영상<\/button>/);
+  assert.match(html, /entry-action--enter[^>]*>ENTER<\/button>.*entry-action--pv[^>]*>PV 영상<\/button>/s);
+  assert.doesNotMatch(html, /NEXT HOLDINGS \/\/ ARCHIVE 09|PV 확인/);
   assert.doesNotMatch(html, /<span>기록 열람<\/span>/);
 });
 
@@ -61,7 +63,9 @@ test("ships Hana-rooted stat and relationship tabs with the supplied relationshi
   assert.match(page, /!isActive && !isConnected \? "is-muted" : ""/);
   assert.doesNotMatch(page, /relationshipFocus !== "하나" && !isActive/);
   assert.match(page, />인물 자세히 보기 <b>→<\/b><\/button>/);
-  assert.match(css, /\.world-brief p \{[^}]*line-height:\s*1\.95/s);
+  assert.match(css, /\.world-brief \{[^}]*display:\s*grid[^}]*grid-template-rows:\s*auto auto minmax\(0,1fr\) auto/s);
+  assert.match(css, /\.world-brief h3 \{[^}]*line-height:\s*1\.24/s);
+  assert.match(css, /\.world-brief p \{[^}]*line-height:\s*1\.82/s);
   assert.match(css, /\.relationship-node\.is-root > span \{[^}]*width:\s*94px[^}]*height:\s*94px/s);
   assert.match(css, /\.relationship-edge \{[^}]*height:\s*4px[^}]*opacity:\s*\.05/s);
   assert.match(css, /\.relationship-edge\.is-active \{[^}]*height:\s*8px[^}]*opacity:\s*1/s);
@@ -113,4 +117,11 @@ test("drives condemnation visibility from React state instead of an opacity anim
   assert.match(css, /\.pv-voice\[data-source="android"\] \{[^}]*right:\s*clamp\([^}]*left:\s*auto[^}]*color:\s*#ff294f/s);
   assert.match(css, /\.pv-voice \{[^}]*left:\s*clamp\([^}]*color:\s*#f4f7f6/s);
   assert.doesNotMatch(css, /pv-voice-appear/);
+});
+
+test("keeps the PV silent without Web Audio controls", async () => {
+  const component = await readFile(new URL("../app/PvExperience.tsx", import.meta.url), "utf8");
+
+  assert.doesNotMatch(component, /AudioContext|createOscillator|createGain|gainRef/);
+  assert.doesNotMatch(component, /SOUND \{muted|setMuted|aria-pressed=\{muted\}/);
 });
