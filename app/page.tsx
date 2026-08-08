@@ -35,6 +35,18 @@ type HeroTerminalMessage = {
   tone: "cyan" | "white" | "red" | "violet";
 };
 
+type CharacterView = "stats" | "relations";
+type RelationshipTone = "command" | "alliance" | "hostile" | "family" | "trust" | "unstable";
+
+type CharacterRelationship = {
+  from: string;
+  to: string;
+  label: string;
+  detail: string;
+  tone: RelationshipTone;
+  direction: "one-way" | "mutual";
+};
+
 const characters: Character[] = [
   {
     name: "하나", alignment: "정의", gender: "남성", age: "외형 20대", species: "안드로이드", rank: "S", affiliation: "FIB", role: "수사 요원", archetype: "ISTJ · 1w9 · sp/so · 153",
@@ -114,6 +126,68 @@ const characterPortraits: Record<string, string> = {
   "이소현": "/characters/lee-so-hyun.png",
   "최태준": "/characters/choi-tae-jun-v2.png",
   "김수현": "/characters/kim-su-hyun.png",
+};
+
+const characterRelationships: CharacterRelationship[] = [
+  { from: "최태준", to: "하나", label: "직속 명령 · 로건 생포", detail: "최태준은 하나에게 로건 생포와 회수를 직접 명령한다.", tone: "command", direction: "one-way" },
+  { from: "하나", to: "정민우", label: "FIB 파트너 · 상호 긴장", detail: "같은 사건을 추적하는 FIB 파트너지만 서로의 판단 기준을 경계한다.", tone: "alliance", direction: "mutual" },
+  { from: "하나", to: "로건", label: "추적자 · 숙적", detail: "하나는 로건을 추적하고, 로건은 하나를 동족을 쫓는 적으로 본다.", tone: "hostile", direction: "mutual" },
+  { from: "이소현", to: "이지혜", label: "보호·후견 / 은인·삶의 기준", detail: "이소현은 이지혜를 보호하고 후견한다. 이지혜에게 이소현은 은인이자 삶의 기준이다.", tone: "trust", direction: "mutual" },
+  { from: "정민우", to: "서도준", label: "현장 공조 · 안드로이드관 충돌", detail: "현장에서는 협력하지만 안드로이드를 바라보는 기준이 달라 계속 충돌한다.", tone: "alliance", direction: "mutual" },
+  { from: "정민우", to: "최태준", label: "증오 · 넥스트홀딩스", detail: "정민우는 가족 사건을 은폐한 최태준과 넥스트홀딩스를 증오한다.", tone: "hostile", direction: "one-way" },
+  { from: "최태준", to: "최진아", label: "부녀 · 과보호", detail: "최태준은 딸 최진아를 과보호한다. 최진아는 아직 회사의 실체를 모른다.", tone: "family", direction: "mutual" },
+  { from: "로건", to: "에이미", label: "리더 · 핵심 전우", detail: "리더와 핵심 전우로 서로를 신뢰하지만 희생을 감수하는 방식 때문에 충돌한다.", tone: "alliance", direction: "mutual" },
+  { from: "로건", to: "최태준", label: "원수", detail: "로건과 최태준은 서로의 존재와 목적을 파괴하려는 원수다.", tone: "hostile", direction: "mutual" },
+  { from: "에이미", to: "하나", label: "FIB 적대 · 제거 대상", detail: "에이미는 하나와 FIB를 적대하며 넥스트홀딩스 체제를 제거 대상으로 본다.", tone: "hostile", direction: "one-way" },
+  { from: "최예림", to: "김진우", label: "상관 · 가족 / 절대복종", detail: "상관과 행동대원의 관계이면서 서로를 가족으로 여긴다. 김진우는 고아원 아이들을 최우선으로 보호한다.", tone: "family", direction: "mutual" },
+  { from: "이소현", to: "최유리", label: "절친 · 법과 언론의 동지", detail: "법과 언론이라는 서로 다른 수단으로 진실을 좇는 절친이자 동지다.", tone: "trust", direction: "mutual" },
+  { from: "이소현", to: "김수현", label: "상호 신뢰", detail: "서로의 판단과 전문성을 인정하며 중요한 순간에 신뢰한다.", tone: "trust", direction: "mutual" },
+  { from: "김수현", to: "최태준", label: "상품화·은폐로 결별", detail: "김수현은 감정형 안드로이드의 상품화와 은폐에 반대해 최태준과 결별했다.", tone: "hostile", direction: "mutual" },
+  { from: "제니", to: "정하은", label: "고정 신뢰 없음 · 강한 의존", detail: "두 사람 모두 고정된 신뢰 상대가 없으며, 신뢰하게 된 대상에게 강하게 의존한다.", tone: "unstable", direction: "mutual" },
+];
+
+const relationshipPositions: Record<string, { x: number; y: number }> = {
+  "하나": { x: 50, y: 46 },
+  "최태준": { x: 50, y: 10 },
+  "정민우": { x: 25, y: 35 },
+  "로건": { x: 76, y: 39 },
+  "에이미": { x: 90, y: 17 },
+  "서도준": { x: 8, y: 23 },
+  "최진아": { x: 34, y: 9 },
+  "김수현": { x: 32, y: 68 },
+  "이소현": { x: 15, y: 73 },
+  "이지혜": { x: 6, y: 91 },
+  "최유리": { x: 23, y: 92 },
+  "최예림": { x: 69, y: 72 },
+  "김진우": { x: 88, y: 88 },
+  "제니": { x: 43, y: 91 },
+  "정하은": { x: 57, y: 91 },
+};
+
+const relationshipLegend: Array<[string, RelationshipTone]> = [
+  ["명령", "command"],
+  ["공조", "alliance"],
+  ["적대", "hostile"],
+  ["가족", "family"],
+  ["신뢰", "trust"],
+  ["불안정", "unstable"],
+];
+
+const relationshipEdgeStyle = ({ from, to }: CharacterRelationship) => {
+  const start = relationshipPositions[from];
+  const end = relationshipPositions[to];
+  const deltaX = end.x - start.x;
+  const deltaY = (end.y - start.y) * 0.625;
+  const length = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+  const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+
+  return {
+    "--edge-x": `${start.x}%`,
+    "--edge-y": `${start.y}%`,
+    "--edge-length": `${length}%`,
+    "--edge-angle": `${angle}deg`,
+    "--edge-label-angle": `${-angle}deg`,
+  } as React.CSSProperties;
 };
 
 const alignmentTone: Record<Character["alignment"], string> = {
@@ -296,6 +370,8 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<TabId>("home");
   const [activeLocation, setActiveLocation] = useState(0);
   const [activeCharacter, setActiveCharacter] = useState(0);
+  const [characterView, setCharacterView] = useState<CharacterView>("stats");
+  const [relationshipFocus, setRelationshipFocus] = useState("하나");
   const [lightboxImage, setLightboxImage] = useState<{ src: string; index: number } | null>(null);
   const [terminalMessageIndex, setTerminalMessageIndex] = useState(0);
   const [terminalText, setTerminalText] = useState("");
@@ -396,6 +472,10 @@ export default function Home() {
   );
   const activeLocationData = locations[activeLocation];
   const activeCharacterData = characters[activeCharacter];
+  const focusedRelationshipCharacter = characters.find((character) => character.name === relationshipFocus) ?? characters[0];
+  const focusedRelationships = characterRelationships.filter(
+    (relationship) => relationship.from === relationshipFocus || relationship.to === relationshipFocus,
+  );
   const activeResidents = activeLocationData.residents
     .map((residentName) => characters.find((character) => character.name === residentName))
     .filter((character): character is Character => character !== undefined);
@@ -424,6 +504,7 @@ export default function Home() {
     const characterIndex = characters.findIndex((character) => character.name === name);
     if (characterIndex < 0) return;
     setFilter("전체");
+    setCharacterView("stats");
     setActiveCharacter(characterIndex);
     changeTab("characters");
   };
@@ -611,13 +692,20 @@ export default function Home() {
         <section className="characters section" id="characters" aria-labelledby="characters-title">
           <div className="section-heading horizontal">
             <div><div className="section-code"><span>FILE 03</span><b>IDENTITY RECORDS</b></div><h2 id="characters-title">교차하는<br /><em>야망과 자유</em></h2></div>
-            <div className="filter-group" aria-label="등장인물 종족 필터">
-              {(["전체", "인간", "안드로이드"] as const).map((item) => (
-                <button key={item} className={filter === item ? "active" : ""} onClick={() => changeCharacterFilter(item)}>{item === "전체" ? "ALL" : item === "인간" ? "HUMAN" : "ANDROID"}<span>{item}</span></button>
-              ))}
-            </div>
+            {characterView === "stats" && (
+              <div className="filter-group" aria-label="등장인물 종족 필터">
+                {(["전체", "인간", "안드로이드"] as const).map((item) => (
+                  <button key={item} className={filter === item ? "active" : ""} onClick={() => changeCharacterFilter(item)}>{item === "전체" ? "ALL" : item === "인간" ? "HUMAN" : "ANDROID"}<span>{item}</span></button>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="character-browser">
+          <div className="character-view-tabs" role="tablist" aria-label="인물 정보 보기">
+            <button id="character-stats-tab" type="button" role="tab" aria-selected={characterView === "stats"} aria-controls="character-stats-panel" className={characterView === "stats" ? "active" : ""} onClick={() => setCharacterView("stats")}><span>01</span><b>스텟</b><small>IDENTITY STAT</small></button>
+            <button id="character-relations-tab" type="button" role="tab" aria-selected={characterView === "relations"} aria-controls="character-relations-panel" className={characterView === "relations" ? "active" : ""} onClick={() => { setCharacterView("relations"); setRelationshipFocus("하나"); }}><span>02</span><b>인물관계도</b><small>RELATIONSHIP TRACE</small></button>
+          </div>
+          {characterView === "stats" ? (
+          <div className="character-browser" id="character-stats-panel" role="tabpanel" aria-labelledby="character-stats-tab">
             <div className="character-roster" aria-label="인물 명부">
               {visibleCharacters.map((character, index) => {
                 const characterIndex = characters.findIndex((item) => item.name === character.name);
@@ -676,6 +764,78 @@ export default function Home() {
               <button className="dossier-next" onClick={showNextCharacter}>다음 인물 파일 <span>→</span></button>
             </aside>
           </div>
+          ) : (
+            <section className="relationship-panel" id="character-relations-panel" role="tabpanel" aria-labelledby="character-relations-tab">
+              <div className="relationship-panel-head">
+                <div>
+                  <span>RELATIONSHIP CHART // ROOT : HANA</span>
+                  <h3>하나를 중심으로 뻗어 나가는 관계 기록</h3>
+                  <p>인물을 선택하면 해당 인물과 연결된 관계선과 기록만 강조됩니다.</p>
+                </div>
+                <div className="relationship-legend" aria-label="관계 유형">
+                  {relationshipLegend.map(([label, tone]) => <span className={`tone-${tone}`} key={tone}><i />{label}</span>)}
+                </div>
+              </div>
+
+              <div className="relationship-map" role="group" aria-label="하나 중심 인물 관계도">
+                <div className="relationship-radar" aria-hidden="true"><i /><i /><i /><i /></div>
+                {characterRelationships.map((relationship) => {
+                  const isActive = relationship.from === relationshipFocus || relationship.to === relationshipFocus;
+                  return (
+                    <span
+                      className={`relationship-edge tone-${relationship.tone} ${isActive ? "is-active" : ""}`}
+                      data-direction={relationship.direction}
+                      style={relationshipEdgeStyle(relationship)}
+                      key={`${relationship.from}-${relationship.to}`}
+                      aria-hidden="true"
+                    >
+                      <i>{relationship.label}</i>
+                    </span>
+                  );
+                })}
+                {characters.filter((character) => relationshipPositions[character.name]).map((character) => {
+                  const position = relationshipPositions[character.name];
+                  const isActive = relationshipFocus === character.name;
+                  const isConnected = focusedRelationships.some((relationship) => relationship.from === character.name || relationship.to === character.name);
+                  return (
+                    <button
+                      className={`relationship-node tone-${alignmentTone[character.alignment]} ${character.name === "하나" ? "is-root" : ""} ${isActive ? "active" : ""} ${relationshipFocus !== "하나" && !isActive && !isConnected ? "is-muted" : ""}`}
+                      type="button"
+                      aria-label={`${character.name} 관계 보기`}
+                      aria-pressed={isActive}
+                      onClick={() => setRelationshipFocus(character.name)}
+                      style={{ "--node-x": `${position.x}%`, "--node-y": `${position.y}%` } as React.CSSProperties}
+                      key={character.name}
+                    >
+                      <span><img src={assetPath(characterPortraits[character.name])} alt="" loading="lazy" /></span>
+                      <b>{character.name}</b>
+                      <small>{character.affiliation}</small>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <aside className={`relationship-inspector tone-${alignmentTone[focusedRelationshipCharacter.alignment]}`} aria-live="polite">
+                <div className="relationship-inspector-profile">
+                  <span><img src={assetPath(characterPortraits[focusedRelationshipCharacter.name])} alt="" /></span>
+                  <div><small>SELECTED IDENTITY</small><h3>{focusedRelationshipCharacter.name}</h3><p>{focusedRelationshipCharacter.affiliation}<i>{" // "}</i>{focusedRelationshipCharacter.role}</p></div>
+                  <button type="button" onClick={() => openCharacter(focusedRelationshipCharacter.name)}>스텟 보기 <b>→</b></button>
+                </div>
+                <ul className="relationship-records">
+                  {focusedRelationships.map((relationship) => {
+                    const otherName = relationship.from === relationshipFocus ? relationship.to : relationship.from;
+                    const direction = relationship.direction === "mutual" ? "↔" : relationship.from === relationshipFocus ? "→" : "←";
+                    return (
+                      <li className={`tone-${relationship.tone}`} key={`${relationship.from}-${relationship.to}-detail`}>
+                        <div><span>{relationship.tone.toUpperCase()}</span><button type="button" onClick={() => setRelationshipFocus(otherName)}>{relationshipFocus} {direction} {otherName}</button><b>{relationship.label}</b></div>
+                        <p>{relationship.detail}</p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </aside>
+            </section>
+          )}
           <p className="archive-note">15 RECORDS LOADED · 인간 {characters.filter((character) => character.species === "인간").length}명 · 안드로이드 {characters.filter((character) => character.species === "안드로이드").length}명 · 주연과 조연 전체 공개</p>
         </section>
 

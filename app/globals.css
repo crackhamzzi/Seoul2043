@@ -169,7 +169,7 @@ button { color: inherit; }
 .world-brief:nth-child(2)::before { border-color: rgba(255,79,186,.18); }.world-brief:nth-child(3)::before { border-color: rgba(255,74,94,.18); }.world-brief:nth-child(4)::before { border-color: rgba(205,156,92,.18); }
 .world-brief > span { position: relative; z-index: 1; color: var(--cyan); font: 700 11px/1 ui-monospace, monospace; letter-spacing: .15em; }
 .world-brief h3 { position: relative; z-index: 1; margin: 13px 0 12px; font-size: clamp(23px, 2vw, 31px); }
-.world-brief p { position: relative; z-index: 1; margin: 0; color: #91a2a9; font-size: clamp(14px, 1vw, 16px); line-height: 1.82; word-break: keep-all; }
+.world-brief p { position: relative; z-index: 1; margin: 0; color: #91a2a9; font-size: clamp(14px, 1vw, 16px); line-height: 1.95; letter-spacing: -.012em; word-break: keep-all; text-wrap: pretty; }
 .world-brief b { position: relative; z-index: 1; display: block; margin-top: 22px; color: #506d77; font: 700 10px/1 ui-monospace, monospace; letter-spacing: .11em; }
 .world-brief-primary { background: linear-gradient(145deg, rgba(16,34,46,.95), rgba(8,13,19,.96)); }
 .world-text-field { height: clamp(520px, 66vh, 720px); align-self: center; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; padding: clamp(30px, 5vw, 74px) 0 clamp(20px, 3vw, 42px) clamp(28px, 4vw, 70px); background: linear-gradient(90deg, rgba(37,200,239,.025), transparent 54%); mask-image: linear-gradient(to bottom, transparent 0, black 8%, black 94%, transparent 100%); border: 1px solid rgba(75,145,167,.23); position: relative; }
@@ -181,6 +181,9 @@ button { color: inherit; }
 .world-text-field.tone-red .text-field-current { padding: 18px 18px 12px; margin: -18px -18px -12px; background: linear-gradient(90deg, rgba(255,35,68,.07), transparent 82%); animation: critical-slice .24s steps(2,end) infinite; }
 .world-text-field.tone-red .text-field-current::before { content: "CRITICAL SYSTEM ERROR // MEMORY CORE UNSTABLE"; position: absolute; top: -16px; left: 18px; color: #ff4963; font: 800 9px/1 ui-monospace, monospace; letter-spacing: .15em; text-shadow: 0 0 9px rgba(255,50,76,.7); animation: critical-label .6s steps(1,end) infinite; }
 .world-text-field.tone-red .text-field-current pre { color: #ff7185; text-shadow: -2px 0 rgba(42,211,255,.42), 2px 0 rgba(255,38,118,.58), 0 0 24px rgba(255,82,105,.36); animation: critical-text-glitch .28s steps(2,end) infinite; }
+.world .section-heading > p { line-height: 1.9; }
+.world-text-field .text-field-history p { line-height: 1.72; }
+.world-text-field .text-field-current pre { line-height: 1.48; }
 
 .factions { background: linear-gradient(180deg, #05070b, #090d13); }
 .faction-list { border-top: 1px solid var(--line); }
@@ -267,6 +270,16 @@ button { color: inherit; }
 
 .characters .section-code { font-size: 13px; }
 .characters .section-heading > p, .characters .section-heading.horizontal > p { font-size: 16px; }
+.character-view-tabs { width: min(100%, 620px); margin: 0 0 26px auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line); background: rgba(4,8,13,.66); }
+.character-view-tabs button { min-height: 72px; padding: 15px 18px; display: grid; grid-template-columns: 32px 1fr; grid-template-rows: auto auto; align-items: center; gap: 5px 10px; border: 0; border-right: 1px solid var(--line); background: transparent; color: #637780; text-align: left; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.character-view-tabs button:last-child { border-right: 0; }
+.character-view-tabs button > span { grid-row: 1 / 3; color: #3f5660; font: 700 10px/1 ui-monospace, monospace; }
+.character-view-tabs button > b { color: #a9bbc1; font-size: 15px; }
+.character-view-tabs button > small { color: #51656d; font: 700 8px/1 ui-monospace, monospace; letter-spacing: .12em; }
+.character-view-tabs button:hover, .character-view-tabs button:focus-visible { background: rgba(37,200,239,.055); color: var(--cyan-bright); outline: none; }
+.character-view-tabs button.active { background: linear-gradient(100deg, rgba(37,200,239,.16), rgba(37,200,239,.035)); box-shadow: inset 0 -2px var(--cyan); }
+.character-view-tabs button.active > span, .character-view-tabs button.active > b { color: var(--cyan-bright); }
+.character-view-tabs button.active > small { color: #718f99; }
 .character-browser { display: grid; grid-template-columns: minmax(340px, .62fr) minmax(640px, 1.38fr); gap: 24px; align-items: start; }
 .character-roster { display: grid; grid-template-columns: 1fr; gap: 10px; }
 .roster-card { --profile: var(--cyan); min-height: 142px; padding: 0; display: grid; grid-template-columns: 110px 1fr; overflow: hidden; border: 1px solid var(--line); background: #0a0f16; text-align: left; cursor: pointer; animation: card-in .32s both; animation-delay: var(--delay); transition: border-color .2s, background .2s, transform .2s; }
@@ -322,6 +335,88 @@ button { color: inherit; }
 @keyframes lightbox-in { from { opacity: 0; } to { opacity: 1; } }
 .dossier-next { width: 100%; min-height: 62px; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; border: 0; background: color-mix(in srgb, var(--profile) 9%, #080d13); color: #b9c6ca; cursor: pointer; font-size: 14px; letter-spacing: .05em; }.dossier-next:hover, .dossier-next:focus-visible { background: var(--profile); color: #031017; outline: none; }
 .tone-cyan, .dossier-cyan { --profile: #25c8ef; }.tone-teal, .dossier-teal { --profile: #53e0c1; }.tone-amber, .dossier-amber { --profile: #f0ba54; }.tone-blue, .dossier-blue { --profile: #58a9ff; }.tone-pink, .dossier-pink { --profile: #ff72c5; }.tone-red, .dossier-red { --profile: #ff5a64; }.tone-violet, .dossier-violet { --profile: #a386ff; }.tone-crimson, .dossier-crimson { --profile: #d84161; }.tone-silver, .dossier-silver { --profile: #b8d4dc; }.tone-rose, .dossier-rose { --profile: #ff7898; }.tone-magenta, .dossier-magenta { --profile: #ff4fba; }.tone-slate, .dossier-slate { --profile: #8ca0b2; }.tone-white, .dossier-white { --profile: #e4f5f8; }.tone-gold, .dossier-gold { --profile: #e9bd5d; }.tone-bronze, .dossier-bronze { --profile: #c18b62; }
+
+.relationship-panel { overflow: hidden; border: 1px solid rgba(100,155,174,.25); background: radial-gradient(circle at 50% 36%, rgba(37,200,239,.07), transparent 28%), linear-gradient(150deg, rgba(9,17,25,.98), rgba(4,8,13,.99)); box-shadow: 0 32px 90px rgba(0,0,0,.32); }
+.relationship-panel-head { min-height: 108px; padding: 24px clamp(22px,3vw,40px); display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--line); }
+.relationship-panel-head > div:first-child > span { color: var(--cyan); font: 700 10px/1 ui-monospace,monospace; letter-spacing: .17em; }
+.relationship-panel-head h3 { margin: 11px 0 7px; color: #e1edf0; font-size: clamp(22px,2.2vw,32px); letter-spacing: -.035em; }
+.relationship-panel-head p { margin: 0; color: #6f858e; font-size: 14px; line-height: 1.75; }
+.relationship-legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px 17px; max-width: 430px; }
+.relationship-legend span { --relation: #72848b; display: inline-flex; align-items: center; gap: 7px; color: #778b93; font: 650 10px/1 ui-monospace,monospace; }
+.relationship-legend i { width: 21px; height: 2px; background: var(--relation); box-shadow: 0 0 8px color-mix(in srgb,var(--relation) 40%,transparent); }
+.relationship-legend .tone-command, .relationship-edge.tone-command, .relationship-records .tone-command { --relation: #35d2fa; }
+.relationship-legend .tone-alliance, .relationship-edge.tone-alliance, .relationship-records .tone-alliance { --relation: #648fff; }
+.relationship-legend .tone-hostile, .relationship-edge.tone-hostile, .relationship-records .tone-hostile { --relation: #ff3658; }
+.relationship-legend .tone-family, .relationship-edge.tone-family, .relationship-records .tone-family { --relation: #edb84e; }
+.relationship-legend .tone-trust, .relationship-edge.tone-trust, .relationship-records .tone-trust { --relation: #5ee1a0; }
+.relationship-legend .tone-unstable, .relationship-edge.tone-unstable, .relationship-records .tone-unstable { --relation: #b587ff; }
+
+.relationship-map { position: relative; width: min(100%,1376px); aspect-ratio: 16 / 10; margin: 0 auto; overflow: hidden; border-right: 1px solid rgba(103,155,171,.1); border-left: 1px solid rgba(103,155,171,.1); background: linear-gradient(rgba(37,200,239,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(37,200,239,.025) 1px,transparent 1px),radial-gradient(circle at 50% 46%,rgba(37,200,239,.08),transparent 34%); background-size: 56px 56px,56px 56px,100% 100%; }
+.relationship-map::before { content: "HANA // RELATIONSHIP ROOT"; position: absolute; z-index: 0; left: 50%; top: 46%; color: rgba(37,200,239,.035); font: 900 clamp(70px,10vw,150px)/1 Arial,sans-serif; letter-spacing: -.07em; white-space: nowrap; transform: translate(-50%,-50%) rotate(-8deg); pointer-events: none; }
+.relationship-radar { position: absolute; z-index: 0; left: 50%; top: 46%; width: min(64%,760px); aspect-ratio: 1; border: 1px solid rgba(37,200,239,.07); border-radius: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+.relationship-radar::before, .relationship-radar::after, .relationship-radar > i { content: ""; position: absolute; inset: 16%; border: 1px solid rgba(37,200,239,.065); border-radius: 50%; }
+.relationship-radar::after { inset: 34%; }
+.relationship-radar > i:nth-child(1) { top: 50%; right: -22%; bottom: auto; left: -22%; height: 1px; border: 0; border-top: 1px solid rgba(37,200,239,.05); border-radius: 0; }
+.relationship-radar > i:nth-child(2) { top: -22%; right: auto; bottom: -22%; left: 50%; width: 1px; border: 0; border-left: 1px solid rgba(37,200,239,.05); border-radius: 0; }
+.relationship-radar > i:nth-child(3) { inset: 7%; }.relationship-radar > i:nth-child(4) { inset: 25%; }
+
+.relationship-edge { --relation: #71858d; position: absolute; z-index: 1; left: var(--edge-x); top: var(--edge-y); width: var(--edge-length); height: 1px; background: color-mix(in srgb,var(--relation) 57%,transparent); box-shadow: 0 0 7px color-mix(in srgb,var(--relation) 22%,transparent); opacity: .34; transform: rotate(var(--edge-angle)); transform-origin: 0 50%; transition: opacity .25s,filter .25s,box-shadow .25s; pointer-events: none; }
+.relationship-edge::after, .relationship-edge::before { content: ""; position: absolute; top: 50%; width: 0; height: 0; border-top: 4px solid transparent; border-bottom: 4px solid transparent; transform: translateY(-50%); }
+.relationship-edge::after { right: -1px; border-left: 7px solid var(--relation); }
+.relationship-edge[data-direction="mutual"]::before { left: -1px; border-right: 7px solid var(--relation); }
+.relationship-edge > i { position: absolute; left: 50%; top: -7px; padding: 4px 7px; border: 1px solid color-mix(in srgb,var(--relation) 22%,transparent); background: rgba(4,9,14,.88); color: color-mix(in srgb,var(--relation) 78%,#dcebef); font: 700 8px/1 ui-monospace,monospace; letter-spacing: .02em; white-space: nowrap; transform: translate(-50%,-50%) rotate(var(--edge-label-angle)); }
+.relationship-edge.is-active { z-index: 2; height: 2px; opacity: 1; box-shadow: 0 0 14px color-mix(in srgb,var(--relation) 48%,transparent); }
+
+.relationship-node { --profile: var(--cyan); position: absolute; z-index: 4; left: var(--node-x); top: var(--node-y); width: 112px; padding: 0; display: flex; flex-direction: column; align-items: center; border: 0; background: transparent; color: #b9c8cc; text-align: center; cursor: pointer; transform: translate(-50%,-50%); transition: opacity .25s,filter .25s,transform .25s; }
+.relationship-node > span { position: relative; width: 66px; height: 66px; overflow: hidden; border: 2px solid color-mix(in srgb,var(--profile) 76%,#d7f7ff); border-radius: 50%; background: #081018; box-shadow: 0 0 0 5px rgba(4,9,14,.84),0 0 20px color-mix(in srgb,var(--profile) 18%,transparent); transition: width .22s,height .22s,box-shadow .22s,border-color .22s; }
+.relationship-node > span::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(145deg,color-mix(in srgb,var(--profile) 15%,transparent),transparent 48%,rgba(0,0,0,.36)); pointer-events: none; }
+.relationship-node img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.76) contrast(1.08); transition: filter .22s,transform .22s; }
+.relationship-node > b { margin-top: 9px; color: #d6e2e5; font-size: 14px; line-height: 1; text-shadow: 0 2px 10px #000; }
+.relationship-node > small { max-width: 110px; margin-top: 5px; overflow: hidden; color: #657a83; font: 650 8px/1 ui-monospace,monospace; text-overflow: ellipsis; white-space: nowrap; }
+.relationship-node:hover, .relationship-node:focus-visible { z-index: 7; outline: none; transform: translate(-50%,-50%) scale(1.06); }
+.relationship-node:hover > span, .relationship-node:focus-visible > span, .relationship-node.active > span { border-color: #e8fbff; box-shadow: 0 0 0 6px rgba(4,9,14,.88),0 0 28px color-mix(in srgb,var(--profile) 52%,transparent); }
+.relationship-node:hover img, .relationship-node:focus-visible img, .relationship-node.active img { filter: saturate(1.04) contrast(1.04); transform: scale(1.05); }
+.relationship-node.active > b { color: var(--profile); }
+.relationship-node.is-root { width: 136px; }
+.relationship-node.is-root > span { width: 94px; height: 94px; border-width: 3px; box-shadow: 0 0 0 7px rgba(4,9,14,.9),0 0 0 8px color-mix(in srgb,var(--profile) 30%,transparent),0 0 42px color-mix(in srgb,var(--profile) 38%,transparent); }
+.relationship-node.is-root > b { margin-top: 12px; font-size: 20px; }.relationship-node.is-root > small { color: var(--cyan); font-size: 9px; }
+.relationship-node.is-muted { opacity: .22; filter: grayscale(.8); }
+
+.relationship-inspector { --profile: var(--cyan); display: grid; grid-template-columns: minmax(300px,.42fr) minmax(0,1.58fr); border-top: 1px solid rgba(100,155,174,.25); background: rgba(4,8,13,.94); }
+.relationship-inspector-profile { padding: 24px 26px; display: grid; grid-template-columns: 76px 1fr; gap: 8px 18px; align-items: center; border-right: 1px solid var(--line); }
+.relationship-inspector-profile > span { grid-row: 1 / 3; width: 76px; height: 76px; overflow: hidden; border: 2px solid var(--profile); border-radius: 50%; box-shadow: 0 0 20px color-mix(in srgb,var(--profile) 18%,transparent); }
+.relationship-inspector-profile img { width: 100%; height: 100%; object-fit: cover; }
+.relationship-inspector-profile small { color: var(--profile); font: 700 8px/1 ui-monospace,monospace; letter-spacing: .13em; }
+.relationship-inspector-profile h3 { margin: 7px 0 5px; color: #e0ecef; font-size: 26px; }.relationship-inspector-profile p { margin: 0; color: #758991; font-size: 11px; }.relationship-inspector-profile p i { color: #3d545d; font-style: normal; }
+.relationship-inspector-profile > button { grid-column: 1 / 3; min-height: 40px; margin-top: 7px; padding: 0 13px; display: flex; align-items: center; justify-content: space-between; border: 1px solid color-mix(in srgb,var(--profile) 30%,var(--line)); background: color-mix(in srgb,var(--profile) 6%,transparent); color: #a8bbc1; cursor: pointer; font-size: 12px; }
+.relationship-inspector-profile > button b { color: var(--profile); }.relationship-inspector-profile > button:hover, .relationship-inspector-profile > button:focus-visible { background: var(--profile); color: #031017; outline: none; }.relationship-inspector-profile > button:hover b, .relationship-inspector-profile > button:focus-visible b { color: #031017; }
+.relationship-records { margin: 0; padding: 18px; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; list-style: none; }
+.relationship-records li { --relation: #71858d; min-width: 0; padding: 15px 17px; border: 1px solid rgba(106,145,158,.16); border-left: 3px solid var(--relation); background: color-mix(in srgb,var(--relation) 4%,rgba(9,14,20,.78)); }
+.relationship-records li > div { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 7px 10px; }
+.relationship-records li span { color: var(--relation); font: 800 8px/1 ui-monospace,monospace; letter-spacing: .1em; }
+.relationship-records li button { min-width: 0; padding: 0; overflow: hidden; border: 0; background: transparent; color: #d1dee1; text-align: left; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; font-size: 13px; font-weight: 700; }
+.relationship-records li button:hover, .relationship-records li button:focus-visible { color: var(--relation); outline: none; }
+.relationship-records li b { grid-column: 1 / 3; color: color-mix(in srgb,var(--relation) 76%,#dce8eb); font-size: 11px; font-weight: 650; }
+.relationship-records li p { margin: 10px 0 0; color: #748991; font-size: 12px; line-height: 1.72; word-break: keep-all; }
+
+@media (max-width: 1000px) {
+  .relationship-panel-head { align-items: flex-start; flex-direction: column; }.relationship-legend { justify-content: flex-start; }
+  .relationship-map { width: 100%; aspect-ratio: auto; padding: 20px; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+  .relationship-map::before, .relationship-radar, .relationship-edge { display: none; }
+  .relationship-node, .relationship-node.is-root { position: relative; left: auto; top: auto; width: auto; min-width: 0; min-height: 112px; padding: 14px 8px; border: 1px solid rgba(106,145,158,.16); background: rgba(7,12,18,.8); transform: none; }
+  .relationship-node:hover, .relationship-node:focus-visible { transform: translateY(-2px); }.relationship-node.is-root { grid-column: 1 / -1; }
+  .relationship-node > span, .relationship-node.is-root > span { width: 58px; height: 58px; border-width: 2px; box-shadow: 0 0 0 4px rgba(4,9,14,.85),0 0 18px color-mix(in srgb,var(--profile) 18%,transparent); }
+  .relationship-node.is-root > b { font-size: 16px; }.relationship-node.is-muted { opacity: .36; }
+  .relationship-inspector { grid-template-columns: 1fr; }.relationship-inspector-profile { border-right: 0; border-bottom: 1px solid var(--line); }.relationship-records { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 620px) {
+  .character-view-tabs { width: 100%; }.character-view-tabs button { min-height: 66px; padding: 12px; grid-template-columns: 24px 1fr; }.character-view-tabs button > small { letter-spacing: .05em; }
+  .relationship-panel-head { padding: 22px 18px; }.relationship-legend { gap: 9px 13px; }
+  .relationship-map { grid-template-columns: repeat(2,minmax(0,1fr)); padding: 12px; gap: 8px; }
+  .relationship-inspector-profile { padding: 18px; grid-template-columns: 64px 1fr; }.relationship-inspector-profile > span { width: 64px; height: 64px; }
+  .relationship-records { padding: 10px; }
+}
 
 .timeline { background: radial-gradient(circle at 82% 8%, rgba(37,200,239,.075), transparent 27%), #06090e; overflow: hidden; }
 .timeline::before { content: "HISTORY"; position: absolute; right: -22px; top: 110px; color: transparent; -webkit-text-stroke: 1px rgba(37,200,239,.055); font: 900 clamp(100px, 16vw, 250px)/1 Arial, sans-serif; letter-spacing: -.06em; pointer-events: none; }

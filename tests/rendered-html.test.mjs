@@ -45,6 +45,23 @@ test("replaces the world CTA with a PV replay control", async () => {
   assert.doesNotMatch(page, /<button className="primary-button"[^>]*>세계관 열람/);
 });
 
+test("ships Hana-rooted stat and relationship tabs with the supplied relationship records", async () => {
+  const [page, css] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /role="tab"[^>]*>.*스텟.*IDENTITY STAT/s);
+  assert.match(page, /role="tab"[^>]*>.*인물관계도.*RELATIONSHIP TRACE/s);
+  assert.match(page, /RELATIONSHIP CHART \/\/ ROOT : HANA/);
+  assert.match(page, /직속 명령 · 로건 생포/);
+  assert.match(page, /FIB 파트너 · 상호 긴장/);
+  assert.match(page, /추적자 · 숙적/);
+  assert.match(page, /하나 중심 인물 관계도/);
+  assert.match(css, /\.world-brief p \{[^}]*line-height:\s*1\.95/s);
+  assert.match(css, /\.relationship-node\.is-root > span \{[^}]*width:\s*94px[^}]*height:\s*94px/s);
+});
+
 test("ships the PV background and transparent finale logo", async () => {
   const assets = ["hana-scream.png", "seoul-2043-logo-transparent.png"];
 
