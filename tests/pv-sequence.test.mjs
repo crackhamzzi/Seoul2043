@@ -101,3 +101,15 @@ test("keeps the scene timeline ordered and shortens it for reduced motion", () =
   );
   assert.ok(reduced.at(-1).atMs < standard.at(-1).atMs);
 });
+
+test("finishes every reduced-motion question before the finale begins", () => {
+  const timeline = getPvTimeline(true);
+  const whyStartMs = timeline.find(({ scene }) => scene === "why").atMs;
+  const finaleStartMs = timeline.find(({ scene }) => scene === "finale").atMs;
+  const whyWindowMs = finaleStartMs - whyStartMs;
+  const latestQuestionEndMs = Math.max(
+    ...getWhyPlan(104, true).map(({ delayMs, speedMs, text }) => delayMs + speedMs * text.length),
+  );
+
+  assert.ok(latestQuestionEndMs < whyWindowMs);
+});

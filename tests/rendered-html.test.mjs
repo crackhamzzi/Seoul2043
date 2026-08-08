@@ -21,11 +21,30 @@ test("server-renders the Seoul 2043 archive", async () => {
 
   const html = await response.text();
   assert.match(html, /서울 2043/);
-  assert.match(html, /야망은 인간의 것인가/);
+  assert.match(html, /인간과 기계의 대립/);
   assert.match(html, /class="world-brief-grid"/);
   assert.match(html, /감정을 가진 상품/);
-  assert.match(html, /class="world-signal-field"/);
+  assert.match(html, /class="world-text-field/);
   assert.doesNotMatch(html, /scroll-marker/);
+});
+
+test("renders independent PV and archive entry controls", async () => {
+  const response = await render();
+  const html = await response.text();
+
+  assert.match(html, /role="group" aria-label="진입 방식 선택"/);
+  assert.match(html, /<button[^>]*class="entry-action entry-action--pv"[^>]*aria-label="PV 확인"[^>]*>PV 확인<\/button>/);
+  assert.match(html, /<button[^>]*class="entry-action entry-action--enter"[^>]*aria-label="ENTER"[^>]*>ENTER<\/button>/);
+  assert.doesNotMatch(html, /<span>기록 열람<\/span>/);
+});
+
+test("ships the PV background and transparent finale logo", async () => {
+  const assets = ["hana-scream.png", "seoul-2043-logo-transparent.png"];
+
+  for (const asset of assets) {
+    await access(new URL(`../public/pv/${asset}`, import.meta.url));
+    await access(new URL(`../dist/client/pv/${asset}`, import.meta.url));
+  }
 });
 
 test("keeps Logan assets and the full-field error effect connected", async () => {

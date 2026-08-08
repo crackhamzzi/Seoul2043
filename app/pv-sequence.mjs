@@ -69,7 +69,7 @@ export function getWhyPlan(count = 104, reducedMotion = false) {
       y: 3 + ((index * 53 + Math.floor(index / 8) * 11) % 92),
       rotation: ((index * 11) % 29) - 14,
       scale: reducedMotion ? 0.94 + ((index * 7) % 19) / 100 : 0.76 + ((index * 17) % 91) / 100,
-      delayMs: Math.round((wave + jitter) * (reducedMotion ? 0.42 : 1)),
+      delayMs: Math.round((wave + jitter) * (reducedMotion ? 0.32 : 1)),
       speedMs: reducedMotion ? 32 : 18 + (index % 5) * 6,
     };
   });
