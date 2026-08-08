@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+/* eslint-disable @next/next/no-img-element */
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import PvExperience from "./PvExperience";
 
 type Character = {
   name: string;
@@ -287,6 +291,7 @@ const assetPath = (path: string) => path.replace(/^\//, "");
 export default function Home() {
   const [entered, setEntered] = useState(false);
   const [introHidden, setIntroHidden] = useState(false);
+  const [pvOpen, setPvOpen] = useState(false);
   const [filter, setFilter] = useState<"전체" | Character["species"]>("전체");
   const [activeTab, setActiveTab] = useState<TabId>("home");
   const [activeLocation, setActiveLocation] = useState(0);
@@ -423,6 +428,9 @@ export default function Home() {
     changeTab("characters");
   };
 
+  const enterArchive = useCallback(() => setEntered(true), []);
+  const closePv = useCallback(() => setPvOpen(false), []);
+
   return (
     <main id="top">
       {!introHidden && (
@@ -435,12 +443,22 @@ export default function Home() {
             <img className="entry-logo" src={assetPath("/seoul-2043-logo.png")} alt="서울 2043" />
             <h1 className="sr-only">서울 2043</h1>
             <p className="entry-tagline">야망이 도시를 소유하고<br />자유가 인간을 의심하는 시대</p>
-            <button className="enter-button" onClick={() => setEntered(true)}>
-              <span>기록 열람</span><b>ENTER</b>
-            </button>
+            <div className="entry-actions" role="group" aria-label="진입 방식 선택">
+              <button className="entry-action entry-action--pv" type="button" aria-label="PV 확인" onClick={() => setPvOpen(true)}>PV 확인</button>
+              <button className="entry-action entry-action--enter" type="button" aria-label="ENTER" onClick={enterArchive}>ENTER</button>
+            </div>
           </div>
           <p className="entry-warning">RESTRICTED FICTION ARCHIVE · 2043 SEOUL</p>
         </section>
+      )}
+
+      {pvOpen && (
+        <PvExperience
+          assetPath={assetPath}
+          onCancel={closePv}
+          onEnterSite={enterArchive}
+          onComplete={closePv}
+        />
       )}
 
       <div className={`site-shell tab-${activeTab}`}>
