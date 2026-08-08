@@ -29,7 +29,10 @@ test("server-renders the Seoul 2043 archive", async () => {
 });
 
 test("renders independent PV and archive entry controls", async () => {
-  const response = await render();
+  const [response, css] = await Promise.all([
+    render(),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
   const html = await response.text();
 
   assert.match(html, /role="group" aria-label="진입 방식 선택"/);
@@ -38,6 +41,9 @@ test("renders independent PV and archive entry controls", async () => {
   assert.match(html, /entry-action--enter[^>]*>ENTER<\/button>.*entry-action--pv[^>]*>PV 영상<\/button>/s);
   assert.doesNotMatch(html, /NEXT HOLDINGS \/\/ ARCHIVE 09|PV 확인/);
   assert.doesNotMatch(html, /<span>기록 열람<\/span>/);
+  assert.match(css, /\.entry-action--enter \{[^}]*background:\s*rgba\(255,255,255,\.055\)[^}]*border-color:\s*rgba\(255,255,255,\.82\)/s);
+  assert.match(css, /\.entry-action--pv \{[^}]*border-color:\s*rgba\(37,200,239,\.72\)/s);
+  assert.doesNotMatch(css, /\.entry-action--pv(?:::before)? \{[^}]*pink/s);
 });
 
 test("replaces the world CTA with a PV replay control", async () => {
@@ -69,8 +75,10 @@ test("ships Hana-rooted stat and relationship tabs with the supplied relationshi
   assert.match(css, /\.relationship-node\.is-root > span \{[^}]*width:\s*94px[^}]*height:\s*94px/s);
   assert.match(css, /\.relationship-edge \{[^}]*height:\s*4px[^}]*opacity:\s*\.05/s);
   assert.match(css, /\.relationship-edge\.is-active \{[^}]*height:\s*8px[^}]*opacity:\s*1/s);
-  assert.match(css, /\.relationship-edge > i \{[^}]*font:\s*800 32px\/1/s);
+  assert.match(css, /\.relationship-edge > i \{[^}]*padding:\s*4px 6px[^}]*border:\s*1px[^}]*font:\s*800 16px\/1/s);
   assert.match(css, /\.relationship-node\.is-muted \{[^}]*opacity:\s*\.08/s);
+  assert.match(css, /\.relationship-legend span \{[^}]*gap:\s*21px[^}]*font:\s*650 30px\/1/s);
+  assert.match(css, /\.relationship-legend i \{[^}]*width:\s*63px[^}]*height:\s*6px/s);
   assert.match(css, /\.relationship-records \{[^}]*grid-auto-rows:\s*minmax\(124px,1fr\)/s);
   assert.match(css, /\.relationship-records li:last-child:nth-child\(odd\) \{[^}]*grid-column:\s*1 \/ -1/s);
   assert.match(css, /\.relationship-records li button \{[^}]*font-size:\s*16px/s);
