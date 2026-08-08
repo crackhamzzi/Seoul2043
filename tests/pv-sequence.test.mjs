@@ -33,6 +33,8 @@ test("alternates six citizen and six android condemnations", () => {
   );
   assert.equal(new Set(voices.map(({ text }) => text)).size, 12);
   assert.ok(voices.every(({ text, delayMs }) => text.length >= 5 && delayMs >= 0));
+  assert.ok(voices.filter(({ speaker }) => speaker === "citizen").every(({ x }) => x >= 3 && x <= 18));
+  assert.ok(voices.filter(({ speaker }) => speaker === "android").every(({ x }) => x >= 3 && x <= 18));
 });
 
 test("asks Hana's question in the approved two-line order", () => {
@@ -66,15 +68,24 @@ test("fills the frame with 104 deterministic system-red questions from Hana", ()
         speaker === "hana" &&
         tone === "system-red" &&
         x >= 2 &&
-        x <= 96 &&
+        x <= 98 &&
         y >= 3 &&
-        y <= 94 &&
-        rotation >= -14 &&
-        rotation <= 14 &&
+        y <= 97 &&
+        rotation >= -90 &&
+        rotation <= 90 &&
         delayMs >= 0,
     ),
   );
   assert.ok(new Set(first.map(({ x, y }) => `${x}:${y}`)).size >= 80);
+  assert.ok(new Set(first.map(({ rotation }) => rotation)).size >= 10);
+  assert.ok(first.some(({ rotation }) => rotation <= -60));
+  assert.ok(first.some(({ rotation }) => Math.abs(rotation) <= 12));
+  assert.ok(first.some(({ rotation }) => rotation >= 60));
+
+  const occupiedSectors = new Set(
+    first.map(({ x, y }) => `${Math.min(3, Math.floor(x / 25))}:${Math.min(2, Math.floor(y / (100 / 3)))}`),
+  );
+  assert.equal(occupiedSectors.size, 12);
 });
 
 test("reveals the logo and enters the archive together before removing the overlay", () => {

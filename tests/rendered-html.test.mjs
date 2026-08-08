@@ -82,5 +82,7 @@ test("drives condemnation visibility from React state instead of an opacity anim
   assert.match(component, /visibleVoiceCount/);
   assert.match(component, /index < visibleVoiceCount \? "is-visible" : ""/);
   assert.match(css, /\.pv-scene--condemnation\.is-active \.pv-voice\.is-visible \{[^}]*opacity:\s*\.9/s);
+  assert.match(css, /\.pv-voice\[data-source="android"\] \{[^}]*right:\s*clamp\([^}]*left:\s*auto[^}]*color:\s*#ff294f/s);
+  assert.match(css, /\.pv-voice \{[^}]*left:\s*clamp\([^}]*color:\s*#f4f7f6/s);
   assert.doesNotMatch(css, /pv-voice-appear/);
 });
