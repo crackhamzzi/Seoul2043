@@ -45,6 +45,8 @@ type CharacterRelationship = {
   detail: string;
   tone: RelationshipTone;
   direction: "one-way" | "mutual";
+  labelAt?: number;
+  labelOffset?: number;
 };
 
 const characters: Character[] = [
@@ -132,7 +134,7 @@ const characterRelationships: CharacterRelationship[] = [
   { from: "최태준", to: "하나", label: "직속 명령 · 로건 생포", detail: "최태준은 하나에게 로건 생포와 회수를 직접 명령한다.", tone: "command", direction: "one-way" },
   { from: "하나", to: "정민우", label: "FIB 파트너 · 상호 긴장", detail: "같은 사건을 추적하는 FIB 파트너지만 서로의 판단 기준을 경계한다.", tone: "alliance", direction: "mutual" },
   { from: "하나", to: "로건", label: "추적자 · 숙적", detail: "하나는 로건을 추적하고, 로건은 하나를 동족을 쫓는 적으로 본다.", tone: "hostile", direction: "mutual" },
-  { from: "이소현", to: "이지혜", label: "보호·후견 / 은인·삶의 기준", detail: "이소현은 이지혜를 보호하고 후견한다. 이지혜에게 이소현은 은인이자 삶의 기준이다.", tone: "trust", direction: "mutual" },
+  { from: "이소현", to: "이지혜", label: "보호·후견 / 은인·삶의 기준", detail: "이소현은 이지혜를 보호하고 후견한다. 이지혜에게 이소현은 은인이자 삶의 기준이다.", tone: "trust", direction: "mutual", labelOffset: 45 },
   { from: "정민우", to: "서도준", label: "현장 공조 · 안드로이드관 충돌", detail: "현장에서는 협력하지만 안드로이드를 바라보는 기준이 달라 계속 충돌한다.", tone: "alliance", direction: "mutual" },
   { from: "정민우", to: "최태준", label: "증오 · 넥스트홀딩스", detail: "정민우는 가족 사건을 은폐한 최태준과 넥스트홀딩스를 증오한다.", tone: "hostile", direction: "one-way" },
   { from: "최태준", to: "최진아", label: "부녀 · 과보호", detail: "최태준은 딸 최진아를 과보호한다. 최진아는 아직 회사의 실체를 모른다.", tone: "family", direction: "mutual" },
@@ -140,10 +142,10 @@ const characterRelationships: CharacterRelationship[] = [
   { from: "로건", to: "최태준", label: "원수", detail: "로건과 최태준은 서로의 존재와 목적을 파괴하려는 원수다.", tone: "hostile", direction: "mutual" },
   { from: "에이미", to: "하나", label: "FIB 적대 · 제거 대상", detail: "에이미는 하나와 FIB를 적대하며 넥스트홀딩스 체제를 제거 대상으로 본다.", tone: "hostile", direction: "one-way" },
   { from: "최예림", to: "김진우", label: "상관 · 가족 / 절대복종", detail: "상관과 행동대원의 관계이면서 서로를 가족으로 여긴다. 김진우는 고아원 아이들을 최우선으로 보호한다.", tone: "family", direction: "mutual" },
-  { from: "이소현", to: "최유리", label: "절친 · 법과 언론의 동지", detail: "법과 언론이라는 서로 다른 수단으로 진실을 좇는 절친이자 동지다.", tone: "trust", direction: "mutual" },
+  { from: "이소현", to: "최유리", label: "절친 · 법과 언론의 동지", detail: "법과 언론이라는 서로 다른 수단으로 진실을 좇는 절친이자 동지다.", tone: "trust", direction: "mutual", labelOffset: 45 },
   { from: "이소현", to: "김수현", label: "상호 신뢰", detail: "서로의 판단과 전문성을 인정하며 중요한 순간에 신뢰한다.", tone: "trust", direction: "mutual" },
   { from: "김수현", to: "최태준", label: "상품화·은폐로 결별", detail: "김수현은 감정형 안드로이드의 상품화와 은폐에 반대해 최태준과 결별했다.", tone: "hostile", direction: "mutual" },
-  { from: "제니", to: "정하은", label: "고정 신뢰 없음 · 강한 의존", detail: "두 사람 모두 고정된 신뢰 상대가 없으며, 신뢰하게 된 대상에게 강하게 의존한다.", tone: "unstable", direction: "mutual" },
+  { from: "제니", to: "정하은", label: "고정 신뢰 없음 · 강한 의존", detail: "두 사람 모두 고정된 신뢰 상대가 없으며, 신뢰하게 된 대상에게 강하게 의존한다.", tone: "unstable", direction: "mutual", labelOffset: -48 },
 ];
 
 const relationshipPositions: Record<string, { x: number; y: number }> = {
@@ -173,7 +175,7 @@ const relationshipLegend: Array<[string, RelationshipTone]> = [
   ["불안정", "unstable"],
 ];
 
-const relationshipEdgeStyle = ({ from, to }: CharacterRelationship) => {
+const relationshipEdgeStyle = ({ from, to, labelAt = 50, labelOffset = -34 }: CharacterRelationship) => {
   const start = relationshipPositions[from];
   const end = relationshipPositions[to];
   const deltaX = end.x - start.x;
@@ -187,6 +189,8 @@ const relationshipEdgeStyle = ({ from, to }: CharacterRelationship) => {
     "--edge-length": `${length}%`,
     "--edge-angle": `${angle}deg`,
     "--edge-label-angle": `${-angle}deg`,
+    "--edge-label-at": `${labelAt}%`,
+    "--edge-label-offset": `${labelOffset}px`,
   } as React.CSSProperties;
 };
 
@@ -529,8 +533,8 @@ export default function Home() {
             <h1 className="sr-only">서울 2043</h1>
             <p className="entry-tagline">야망이 도시를 소유하고<br />자유가 인간을 의심하는 시대</p>
             <div className="entry-actions" role="group" aria-label="진입 방식 선택">
+              <button className="entry-action entry-action--pv" type="button" aria-label="PV 영상 보기" onClick={() => setPvOpen(true)}>PV 영상 보기</button>
               <button className="entry-action entry-action--enter" type="button" aria-label="ENTER" onClick={enterArchive}>ENTER</button>
-              <button className="entry-action entry-action--pv" type="button" aria-label="PV 영상" onClick={() => setPvOpen(true)}>PV 영상</button>
             </div>
           </div>
           <p className="entry-warning">RESTRICTED FICTION ARCHIVE · 2043 SEOUL</p>

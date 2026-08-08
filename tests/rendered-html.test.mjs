@@ -36,14 +36,13 @@ test("renders independent PV and archive entry controls", async () => {
   const html = await response.text();
 
   assert.match(html, /role="group" aria-label="진입 방식 선택"/);
+  assert.match(html, /<button[^>]*class="entry-action entry-action--pv"[^>]*aria-label="PV 영상 보기"[^>]*>PV 영상 보기<\/button>/);
   assert.match(html, /<button[^>]*class="entry-action entry-action--enter"[^>]*aria-label="ENTER"[^>]*>ENTER<\/button>/);
-  assert.match(html, /<button[^>]*class="entry-action entry-action--pv"[^>]*aria-label="PV 영상"[^>]*>PV 영상<\/button>/);
-  assert.match(html, /entry-action--enter[^>]*>ENTER<\/button>.*entry-action--pv[^>]*>PV 영상<\/button>/s);
+  assert.match(html, /entry-action--pv[^>]*>PV 영상 보기<\/button>.*entry-action--enter[^>]*>ENTER<\/button>/s);
   assert.doesNotMatch(html, /NEXT HOLDINGS \/\/ ARCHIVE 09|PV 확인/);
   assert.doesNotMatch(html, /<span>기록 열람<\/span>/);
-  assert.match(css, /\.entry-action--enter \{[^}]*background:\s*rgba\(255,255,255,\.055\)[^}]*border-color:\s*rgba\(255,255,255,\.82\)/s);
-  assert.match(css, /\.entry-action--pv \{[^}]*border-color:\s*rgba\(37,200,239,\.72\)/s);
-  assert.doesNotMatch(css, /\.entry-action--pv(?:::before)? \{[^}]*pink/s);
+  assert.match(css, /\.entry-action \{[^}]*border:\s*1px solid rgba\(37,200,239,\.72\)[^}]*background:\s*rgba\(5,12,18,\.58\)[^}]*color:\s*var\(--cyan-bright\)/s);
+  assert.doesNotMatch(css, /\.entry-action--(?:enter|pv)(?:::?[\w-]+)?\s*\{/);
 });
 
 test("replaces the world CTA with a PV replay control", async () => {
@@ -75,7 +74,10 @@ test("ships Hana-rooted stat and relationship tabs with the supplied relationshi
   assert.match(css, /\.relationship-node\.is-root > span \{[^}]*width:\s*94px[^}]*height:\s*94px/s);
   assert.match(css, /\.relationship-edge \{[^}]*height:\s*4px[^}]*opacity:\s*\.05/s);
   assert.match(css, /\.relationship-edge\.is-active \{[^}]*height:\s*8px[^}]*opacity:\s*1/s);
-  assert.match(css, /\.relationship-edge > i \{[^}]*padding:\s*4px 6px[^}]*border:\s*1px[^}]*font:\s*800 16px\/1/s);
+  assert.match(css, /\.relationship-edge > i \{[^}]*left:\s*var\(--edge-label-at,50%\)[^}]*top:\s*var\(--edge-label-offset,-34px\)[^}]*padding:\s*4px 6px[^}]*border:\s*1px[^}]*font:\s*800 16px\/1/s);
+  assert.match(page, /from: "이소현", to: "이지혜"[^\n]*labelOffset: 45/);
+  assert.match(page, /from: "이소현", to: "최유리"[^\n]*labelOffset: 45/);
+  assert.match(page, /from: "제니", to: "정하은"[^\n]*labelOffset: -48/);
   assert.match(css, /\.relationship-node\.is-muted \{[^}]*opacity:\s*\.08/s);
   assert.match(css, /\.relationship-legend span \{[^}]*gap:\s*21px[^}]*font:\s*650 30px\/1/s);
   assert.match(css, /\.relationship-legend i \{[^}]*width:\s*63px[^}]*height:\s*6px/s);
