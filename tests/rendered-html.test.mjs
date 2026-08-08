@@ -52,6 +52,14 @@ test("replaces the world CTA with a PV replay control", async () => {
   assert.doesNotMatch(page, /<button className="primary-button"[^>]*>세계관 열람/);
 });
 
+test("ships the revised location names and legal-office copy", async () => {
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(page, /name: "핑크 거리"/);
+  assert.doesNotMatch(page, /name: "사창가 거리"/);
+  assert.match(page, /서민들에겐 영웅 권력가들에겐 공포의 사무실이다/);
+});
+
 test("ships Hana-rooted stat and relationship tabs with the supplied relationship records", async () => {
   const [page, css] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
@@ -74,10 +82,14 @@ test("ships Hana-rooted stat and relationship tabs with the supplied relationshi
   assert.match(css, /\.relationship-node\.is-root > span \{[^}]*width:\s*94px[^}]*height:\s*94px/s);
   assert.match(css, /\.relationship-edge \{[^}]*height:\s*4px[^}]*opacity:\s*\.05/s);
   assert.match(css, /\.relationship-edge\.is-active \{[^}]*height:\s*8px[^}]*opacity:\s*1/s);
-  assert.match(css, /\.relationship-edge > i \{[^}]*left:\s*var\(--edge-label-at,50%\)[^}]*top:\s*var\(--edge-label-offset,-34px\)[^}]*padding:\s*4px 6px[^}]*border:\s*1px[^}]*font:\s*800 16px\/1/s);
-  assert.match(page, /from: "이소현", to: "이지혜"[^\n]*labelOffset: 45/);
-  assert.match(page, /from: "이소현", to: "최유리"[^\n]*labelOffset: 45/);
-  assert.match(page, /from: "제니", to: "정하은"[^\n]*labelOffset: -48/);
+  assert.match(css, /\.relationship-edge-label \{[^}]*left:\s*var\(--edge-label-x\)[^}]*top:\s*var\(--edge-label-y\)[^}]*padding:\s*4px 6px[^}]*font:\s*800 16px\/1[^}]*translate\(var\(--edge-label-shift-x\),var\(--edge-label-shift-y\)\)/s);
+  assert.doesNotMatch(css, /\.relationship-edge > i/);
+  assert.match(page, /className=\{`relationship-edge-label tone-\$\{relationship\.tone\}/);
+  assert.match(page, /from: "이소현", to: "이지혜"[^\n]*mapLabel: \["보호·후견", "은인·삶의 기준"\][^\n]*labelShiftX: -43, labelShiftY: 0/);
+  assert.match(page, /from: "이소현", to: "최유리"[^\n]*mapLabel: \["절친", "법과 언론의 동지"\][^\n]*labelShiftX: 18, labelShiftY: 0/);
+  assert.match(page, /"이소현": \{ x: 15, y: 66 \}/);
+  assert.match(page, /from: "제니", to: "정하은"[^\n]*mapLabel: \["고정 신뢰 없음", "강한 의존"\][^\n]*labelShiftY: -88/);
+  assert.match(css, /\.relationship-edge-label\.is-multiline \{[^}]*line-height:\s*1\.18[^}]*text-align:\s*center/s);
   assert.match(css, /\.relationship-node\.is-muted \{[^}]*opacity:\s*\.08/s);
   assert.match(css, /\.relationship-legend span \{[^}]*gap:\s*21px[^}]*font:\s*650 30px\/1/s);
   assert.match(css, /\.relationship-legend i \{[^}]*width:\s*63px[^}]*height:\s*6px/s);

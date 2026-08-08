@@ -341,12 +341,12 @@ button { color: inherit; }
 .relationship-legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 30px 51px; max-width: 1290px; }
 .relationship-legend span { --relation: #72848b; display: inline-flex; align-items: center; gap: 21px; color: #8da1a9; font: 650 30px/1 ui-monospace,monospace; }
 .relationship-legend i { width: 63px; height: 6px; background: var(--relation); box-shadow: 0 0 24px color-mix(in srgb,var(--relation) 40%,transparent); }
-.relationship-legend .tone-command, .relationship-edge.tone-command, .relationship-records .tone-command { --relation: #35d2fa; }
-.relationship-legend .tone-alliance, .relationship-edge.tone-alliance, .relationship-records .tone-alliance { --relation: #648fff; }
-.relationship-legend .tone-hostile, .relationship-edge.tone-hostile, .relationship-records .tone-hostile { --relation: #ff3658; }
-.relationship-legend .tone-family, .relationship-edge.tone-family, .relationship-records .tone-family { --relation: #edb84e; }
-.relationship-legend .tone-trust, .relationship-edge.tone-trust, .relationship-records .tone-trust { --relation: #5ee1a0; }
-.relationship-legend .tone-unstable, .relationship-edge.tone-unstable, .relationship-records .tone-unstable { --relation: #b587ff; }
+.relationship-legend .tone-command, .relationship-edge.tone-command, .relationship-edge-label.tone-command, .relationship-records .tone-command { --relation: #35d2fa; }
+.relationship-legend .tone-alliance, .relationship-edge.tone-alliance, .relationship-edge-label.tone-alliance, .relationship-records .tone-alliance { --relation: #648fff; }
+.relationship-legend .tone-hostile, .relationship-edge.tone-hostile, .relationship-edge-label.tone-hostile, .relationship-records .tone-hostile { --relation: #ff3658; }
+.relationship-legend .tone-family, .relationship-edge.tone-family, .relationship-edge-label.tone-family, .relationship-records .tone-family { --relation: #edb84e; }
+.relationship-legend .tone-trust, .relationship-edge.tone-trust, .relationship-edge-label.tone-trust, .relationship-records .tone-trust { --relation: #5ee1a0; }
+.relationship-legend .tone-unstable, .relationship-edge.tone-unstable, .relationship-edge-label.tone-unstable, .relationship-records .tone-unstable { --relation: #b587ff; }
 
 .relationship-map { position: relative; width: min(100%,1376px); aspect-ratio: 16 / 10; margin: 0 auto; overflow: hidden; border-right: 1px solid rgba(103,155,171,.1); border-left: 1px solid rgba(103,155,171,.1); background: linear-gradient(rgba(37,200,239,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(37,200,239,.025) 1px,transparent 1px),radial-gradient(circle at 50% 46%,rgba(37,200,239,.08),transparent 34%); background-size: 56px 56px,56px 56px,100% 100%; }
 .relationship-map::before { content: "HANA // RELATIONSHIP ROOT"; position: absolute; z-index: 0; left: 50%; top: 46%; color: rgba(37,200,239,.035); font: 900 clamp(70px,10vw,150px)/1 Arial,sans-serif; letter-spacing: -.07em; white-space: nowrap; transform: translate(-50%,-50%) rotate(-8deg); pointer-events: none; }
@@ -361,9 +361,11 @@ button { color: inherit; }
 .relationship-edge::after, .relationship-edge::before { content: ""; position: absolute; top: 50%; width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; transform: translateY(-50%); }
 .relationship-edge::after { right: -1px; border-left: 14px solid var(--relation); }
 .relationship-edge[data-direction="mutual"]::before { left: -1px; border-right: 14px solid var(--relation); }
-.relationship-edge > i { position: absolute; left: var(--edge-label-at,50%); top: var(--edge-label-offset,-34px); padding: 4px 6px; border: 1px solid color-mix(in srgb,var(--relation) 46%,transparent); background: rgba(2,7,12,.96); color: color-mix(in srgb,var(--relation) 82%,#f0f8fa); font: 800 16px/1 ui-monospace,monospace; letter-spacing: -.02em; white-space: nowrap; opacity: 0; text-shadow: 0 0 8px color-mix(in srgb,var(--relation) 42%,transparent); transform: translate(-50%,-50%) rotate(var(--edge-label-angle)); transition: opacity .18s; }
 .relationship-edge.is-active { z-index: 3; height: 8px; opacity: 1; filter: none; box-shadow: 0 0 22px color-mix(in srgb,var(--relation) 58%,transparent); }
-.relationship-edge.is-active > i { opacity: 1; }
+.relationship-edge-label { --relation: #71858d; position: absolute; z-index: 3; left: var(--edge-label-x); top: var(--edge-label-y); padding: 4px 6px; border: 1px solid color-mix(in srgb,var(--relation) 46%,transparent); background: rgba(2,7,12,.96); color: color-mix(in srgb,var(--relation) 82%,#f0f8fa); font: 800 16px/1 ui-monospace,monospace; letter-spacing: -.02em; white-space: nowrap; opacity: 0; text-shadow: 0 0 8px color-mix(in srgb,var(--relation) 42%,transparent); transform: translate(-50%,-50%) translate(var(--edge-label-shift-x),var(--edge-label-shift-y)); transition: opacity .18s; pointer-events: none; }
+.relationship-edge-label > span { display: block; }
+.relationship-edge-label.is-multiline { line-height: 1.18; text-align: center; }
+.relationship-edge-label.is-active { opacity: 1; }
 
 .relationship-node { --profile: var(--cyan); position: absolute; z-index: 4; left: var(--node-x); top: var(--node-y); width: 112px; padding: 0; display: flex; flex-direction: column; align-items: center; border: 0; background: transparent; color: #b9c8cc; text-align: center; cursor: pointer; transform: translate(-50%,-50%); transition: opacity .25s,filter .25s,transform .25s; }
 .relationship-node > span { position: relative; width: 66px; height: 66px; overflow: hidden; border: 2px solid color-mix(in srgb,var(--profile) 76%,#d7f7ff); border-radius: 50%; background: #081018; box-shadow: 0 0 0 5px rgba(4,9,14,.84),0 0 20px color-mix(in srgb,var(--profile) 18%,transparent); transition: width .22s,height .22s,box-shadow .22s,border-color .22s; }
@@ -401,7 +403,7 @@ button { color: inherit; }
 @media (max-width: 1000px) {
   .relationship-panel-head { align-items: flex-start; flex-direction: column; }.relationship-legend { justify-content: flex-start; }
   .relationship-map { width: 100%; aspect-ratio: auto; padding: 20px; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
-  .relationship-map::before, .relationship-radar, .relationship-edge { display: none; }
+  .relationship-map::before, .relationship-radar, .relationship-edge, .relationship-edge-label { display: none; }
   .relationship-node, .relationship-node.is-root { position: relative; left: auto; top: auto; width: auto; min-width: 0; min-height: 112px; padding: 14px 8px; border: 1px solid rgba(106,145,158,.16); background: rgba(7,12,18,.8); transform: none; }
   .relationship-node:hover, .relationship-node:focus-visible { transform: translateY(-2px); }.relationship-node.is-root { grid-column: 1 / -1; }
   .relationship-node > span, .relationship-node.is-root > span { width: 58px; height: 58px; border-width: 2px; box-shadow: 0 0 0 4px rgba(4,9,14,.85),0 0 18px color-mix(in srgb,var(--profile) 18%,transparent); }

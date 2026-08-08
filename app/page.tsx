@@ -45,8 +45,9 @@ type CharacterRelationship = {
   detail: string;
   tone: RelationshipTone;
   direction: "one-way" | "mutual";
-  labelAt?: number;
-  labelOffset?: number;
+  mapLabel?: string[];
+  labelShiftX?: number;
+  labelShiftY?: number;
 };
 
 const characters: Character[] = [
@@ -134,7 +135,7 @@ const characterRelationships: CharacterRelationship[] = [
   { from: "최태준", to: "하나", label: "직속 명령 · 로건 생포", detail: "최태준은 하나에게 로건 생포와 회수를 직접 명령한다.", tone: "command", direction: "one-way" },
   { from: "하나", to: "정민우", label: "FIB 파트너 · 상호 긴장", detail: "같은 사건을 추적하는 FIB 파트너지만 서로의 판단 기준을 경계한다.", tone: "alliance", direction: "mutual" },
   { from: "하나", to: "로건", label: "추적자 · 숙적", detail: "하나는 로건을 추적하고, 로건은 하나를 동족을 쫓는 적으로 본다.", tone: "hostile", direction: "mutual" },
-  { from: "이소현", to: "이지혜", label: "보호·후견 / 은인·삶의 기준", detail: "이소현은 이지혜를 보호하고 후견한다. 이지혜에게 이소현은 은인이자 삶의 기준이다.", tone: "trust", direction: "mutual", labelOffset: 45 },
+  { from: "이소현", to: "이지혜", label: "보호·후견 / 은인·삶의 기준", detail: "이소현은 이지혜를 보호하고 후견한다. 이지혜에게 이소현은 은인이자 삶의 기준이다.", tone: "trust", direction: "mutual", mapLabel: ["보호·후견", "은인·삶의 기준"], labelShiftX: -43, labelShiftY: 0 },
   { from: "정민우", to: "서도준", label: "현장 공조 · 안드로이드관 충돌", detail: "현장에서는 협력하지만 안드로이드를 바라보는 기준이 달라 계속 충돌한다.", tone: "alliance", direction: "mutual" },
   { from: "정민우", to: "최태준", label: "증오 · 넥스트홀딩스", detail: "정민우는 가족 사건을 은폐한 최태준과 넥스트홀딩스를 증오한다.", tone: "hostile", direction: "one-way" },
   { from: "최태준", to: "최진아", label: "부녀 · 과보호", detail: "최태준은 딸 최진아를 과보호한다. 최진아는 아직 회사의 실체를 모른다.", tone: "family", direction: "mutual" },
@@ -142,10 +143,10 @@ const characterRelationships: CharacterRelationship[] = [
   { from: "로건", to: "최태준", label: "원수", detail: "로건과 최태준은 서로의 존재와 목적을 파괴하려는 원수다.", tone: "hostile", direction: "mutual" },
   { from: "에이미", to: "하나", label: "FIB 적대 · 제거 대상", detail: "에이미는 하나와 FIB를 적대하며 넥스트홀딩스 체제를 제거 대상으로 본다.", tone: "hostile", direction: "one-way" },
   { from: "최예림", to: "김진우", label: "상관 · 가족 / 절대복종", detail: "상관과 행동대원의 관계이면서 서로를 가족으로 여긴다. 김진우는 고아원 아이들을 최우선으로 보호한다.", tone: "family", direction: "mutual" },
-  { from: "이소현", to: "최유리", label: "절친 · 법과 언론의 동지", detail: "법과 언론이라는 서로 다른 수단으로 진실을 좇는 절친이자 동지다.", tone: "trust", direction: "mutual", labelOffset: 45 },
+  { from: "이소현", to: "최유리", label: "절친 · 법과 언론의 동지", detail: "법과 언론이라는 서로 다른 수단으로 진실을 좇는 절친이자 동지다.", tone: "trust", direction: "mutual", mapLabel: ["절친", "법과 언론의 동지"], labelShiftX: 18, labelShiftY: 0 },
   { from: "이소현", to: "김수현", label: "상호 신뢰", detail: "서로의 판단과 전문성을 인정하며 중요한 순간에 신뢰한다.", tone: "trust", direction: "mutual" },
   { from: "김수현", to: "최태준", label: "상품화·은폐로 결별", detail: "김수현은 감정형 안드로이드의 상품화와 은폐에 반대해 최태준과 결별했다.", tone: "hostile", direction: "mutual" },
-  { from: "제니", to: "정하은", label: "고정 신뢰 없음 · 강한 의존", detail: "두 사람 모두 고정된 신뢰 상대가 없으며, 신뢰하게 된 대상에게 강하게 의존한다.", tone: "unstable", direction: "mutual", labelOffset: -48 },
+  { from: "제니", to: "정하은", label: "고정 신뢰 없음 · 강한 의존", detail: "두 사람 모두 고정된 신뢰 상대가 없으며, 신뢰하게 된 대상에게 강하게 의존한다.", tone: "unstable", direction: "mutual", mapLabel: ["고정 신뢰 없음", "강한 의존"], labelShiftY: -88 },
 ];
 
 const relationshipPositions: Record<string, { x: number; y: number }> = {
@@ -157,7 +158,7 @@ const relationshipPositions: Record<string, { x: number; y: number }> = {
   "서도준": { x: 8, y: 23 },
   "최진아": { x: 34, y: 9 },
   "김수현": { x: 32, y: 68 },
-  "이소현": { x: 15, y: 73 },
+  "이소현": { x: 15, y: 66 },
   "이지혜": { x: 6, y: 91 },
   "최유리": { x: 23, y: 92 },
   "최예림": { x: 69, y: 72 },
@@ -175,7 +176,7 @@ const relationshipLegend: Array<[string, RelationshipTone]> = [
   ["불안정", "unstable"],
 ];
 
-const relationshipEdgeStyle = ({ from, to, labelAt = 50, labelOffset = -34 }: CharacterRelationship) => {
+const relationshipEdgeStyle = ({ from, to }: CharacterRelationship) => {
   const start = relationshipPositions[from];
   const end = relationshipPositions[to];
   const deltaX = end.x - start.x;
@@ -188,9 +189,18 @@ const relationshipEdgeStyle = ({ from, to, labelAt = 50, labelOffset = -34 }: Ch
     "--edge-y": `${start.y}%`,
     "--edge-length": `${length}%`,
     "--edge-angle": `${angle}deg`,
-    "--edge-label-angle": `${-angle}deg`,
-    "--edge-label-at": `${labelAt}%`,
-    "--edge-label-offset": `${labelOffset}px`,
+  } as React.CSSProperties;
+};
+
+const relationshipEdgeLabelStyle = ({ from, to, labelShiftX = 0, labelShiftY = -34 }: CharacterRelationship) => {
+  const start = relationshipPositions[from];
+  const end = relationshipPositions[to];
+
+  return {
+    "--edge-label-x": `${(start.x + end.x) / 2}%`,
+    "--edge-label-y": `${(start.y + end.y) / 2}%`,
+    "--edge-label-shift-x": `${labelShiftX}px`,
+    "--edge-label-shift-y": `${labelShiftY}px`,
   } as React.CSSProperties;
 };
 
@@ -296,12 +306,12 @@ const characterGallery: Partial<Record<string, string[]>> = {
 
 const locations = [
   { number: "01", name: "넥스트홀딩스", key: "CORPORATE CITADEL", zone: "중앙 기업지구", status: "통제 등급 · BLACK", x: "51%", y: "35%", tone: "cyan", residents: ["하나", "최태준"], description: "안드로이드의 연구·생산·판매·회수를 한 건물 안에서 통제하는 초거대 기업 본사. 공존을 홍보하는 공개 구역 아래로 결함 판정실과 봉인된 회수 기록이 겹겹이 숨겨져 있다." },
-  { number: "02", name: "법무법인 정의", key: "LEGAL ARCHIVE", zone: "중앙 업무지구", status: "민간 구역 · OPEN", x: "65%", y: "36%", tone: "white", residents: ["이소현", "이지혜"], description: "권력형 비리와 국가 상대 소송의 기록이 축적된 소수정예 법률 사무소. 작은 상담실과 방대한 증거 보관실이 맞닿아 있으며, 억울한 인간과 안드로이드 모두가 마지막으로 문을 두드리는 곳이다." },
+  { number: "02", name: "법무법인 정의", key: "LEGAL ARCHIVE", zone: "중앙 업무지구", status: "민간 구역 · OPEN", x: "65%", y: "36%", tone: "white", residents: ["이소현", "이지혜"], description: "권력형 비리와 국가 상대 소송의 기록이 축적된 소수정예 법률 사무소. 작은 상담실과 방대한 증거 보관실이 맞닿아 있으며, 서민들에겐 영웅 권력가들에겐 공포의 사무실이다." },
   { number: "03", name: "해방군 거점", key: "FORBIDDEN ZONE", zone: "도시 외곽 봉쇄구역", status: "출입 금지 · HAZARD", x: "78%", y: "72%", tone: "red", residents: ["로건", "에이미"], description: "2035년의 참사 이후 봉쇄된 은평구 구산동 크랙고 폐허. 끊긴 도로와 무너진 건물 아래에 각성자들의 은신처, 통신망, 보급 창고가 이어진 서울 최대의 출입금지 구역이다." },
   { number: "04", name: "관할 경찰서", key: "JOINT TASKFORCE", zone: "남서 시민구역", status: "공권력 구역 · SECURE", x: "29%", y: "70%", tone: "red", residents: ["서도준", "정민우"], description: "각성자 사건을 전담하는 FIB 합동수사본부가 설치된 관할서. 일반 민원실 뒤편에 분석실·증거 보관실·현장 제압 장비고가 있으며, 공권력과 기업 시스템이 가장 가까이 맞물리는 장소다." },
   { number: "05", name: "해바라기 고아원", key: "HIDDEN FRONT", zone: "남동 주택가", status: "보호 시설 · UNKNOWN", x: "59%", y: "82%", tone: "amber", residents: ["최예림", "김진우"], description: "겉으로는 버려진 아이들을 돌보는 소박한 이층집. 작은 마당과 생활 공간 뒤에는 외부에 알려지지 않은 비밀조직의 연락망과 폐쇄 구역이 공존한다." },
   { number: "06", name: "방송국", key: "NATIONAL FEED", zone: "서부 미디어지구", status: "송출 구역 · LIVE", x: "17%", y: "39%", tone: "pink", residents: ["최유리", "최진아"], description: "음악방송과 예능이 끊임없이 제작되는 화려한 미디어 타워. 생방송 스튜디오와 편집실, 전국 송출망이 연결되어 있어 은폐된 진실을 단 한 번에 서울 전역으로 퍼뜨릴 수 있다." },
-  { number: "07", name: "사창가 거리", key: "PINK SHADOW", zone: "서부 후면 유흥구역", status: "치안 취약 · CAUTION", x: "35%", y: "29%", tone: "magenta", residents: ["제니", "정하은"], description: "방송국의 화려한 전광판과 넥스트홀딩스의 푸른 타워 사이, 두 건물의 뒤편에 숨은 비좁은 유흥가. 낡은 골목을 분홍빛 네온이 적시며 생계와 착취, 불법 개조와 거래가 공권력의 시선을 피해 얽혀 있다." },
+  { number: "07", name: "핑크 거리", key: "PINK SHADOW", zone: "서부 후면 유흥구역", status: "치안 취약 · CAUTION", x: "35%", y: "29%", tone: "magenta", residents: ["제니", "정하은"], description: "방송국의 화려한 전광판과 넥스트홀딩스의 푸른 타워 사이, 두 건물의 뒤편에 숨은 비좁은 유흥가. 낡은 골목을 분홍빛 네온이 적시며 생계와 착취, 불법 개조와 거래가 공권력의 시선을 피해 얽혀 있다." },
 ] as const;
 
 const historyRecords = [
@@ -789,10 +799,21 @@ export default function Home() {
                       className={`relationship-edge tone-${relationship.tone} ${isActive ? "is-active" : ""}`}
                       data-direction={relationship.direction}
                       style={relationshipEdgeStyle(relationship)}
-                      key={`${relationship.from}-${relationship.to}`}
+                      key={`edge-${relationship.from}-${relationship.to}`}
+                      aria-hidden="true"
+                    />
+                  );
+                })}
+                {characterRelationships.map((relationship) => {
+                  const isActive = relationship.from === relationshipFocus || relationship.to === relationshipFocus;
+                  return (
+                    <span
+                      className={`relationship-edge-label tone-${relationship.tone} ${relationship.mapLabel ? "is-multiline" : ""} ${isActive ? "is-active" : ""}`}
+                      style={relationshipEdgeLabelStyle(relationship)}
+                      key={`label-${relationship.from}-${relationship.to}`}
                       aria-hidden="true"
                     >
-                      <i>{relationship.label}</i>
+                      {(relationship.mapLabel ?? [relationship.label]).map((line) => <span key={line}>{line}</span>)}
                     </span>
                   );
                 })}
