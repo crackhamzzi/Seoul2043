@@ -714,7 +714,7 @@ export default function Home() {
             )}
           </div>
           <div className="character-view-tabs" role="tablist" aria-label="인물 정보 보기">
-            <button id="character-stats-tab" type="button" role="tab" aria-selected={characterView === "stats"} aria-controls="character-stats-panel" className={characterView === "stats" ? "active" : ""} onClick={() => setCharacterView("stats")}><span>01</span><b>스텟</b><small>IDENTITY STAT</small></button>
+            <button id="character-stats-tab" type="button" role="tab" aria-selected={characterView === "stats"} aria-controls="character-stats-panel" className={characterView === "stats" ? "active" : ""} onClick={() => setCharacterView("stats")}><span>01</span><b>등장인물</b><small>CHARACTER FILES</small></button>
             <button id="character-relations-tab" type="button" role="tab" aria-selected={characterView === "relations"} aria-controls="character-relations-panel" className={characterView === "relations" ? "active" : ""} onClick={() => { setCharacterView("relations"); setRelationshipFocus("하나"); }}><span>02</span><b>인물관계도</b><small>RELATIONSHIP TRACE</small></button>
           </div>
           {characterView === "stats" ? (

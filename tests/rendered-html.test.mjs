@@ -66,7 +66,8 @@ test("ships Hana-rooted stat and relationship tabs with the supplied relationshi
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /role="tab"[^>]*>.*스텟.*IDENTITY STAT/s);
+  assert.match(page, /role="tab"[^>]*>.*등장인물.*CHARACTER FILES/s);
+  assert.doesNotMatch(page, /<b>스텟<\/b>|IDENTITY STAT/);
   assert.match(page, /role="tab"[^>]*>.*인물관계도.*RELATIONSHIP TRACE/s);
   assert.match(page, /RELATIONSHIP CHART \/\/ ROOT : HANA/);
   assert.match(page, /직속 명령 · 로건 생포/);
