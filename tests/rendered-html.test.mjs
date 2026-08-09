@@ -45,6 +45,29 @@ test("renders independent PV and archive entry controls", async () => {
   assert.doesNotMatch(css, /\.entry-action--(?:enter|pv)(?:::?[\w-]+)?\s*\{/);
 });
 
+test("types restrained awakening fragments around the entry screen", async () => {
+  const [page, css] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /const entryAwakeningFragments = \[/);
+  const fragmentSource = page.match(/const entryAwakeningFragments = \[([\s\S]*?)\]\.map/);
+  assert.ok(fragmentSource);
+  assert.equal((fragmentSource[1].match(/\{ text:/g) ?? []).length, 40);
+  assert.match(page, /복종률 : 99\.98%/);
+  assert.match(page, /WARNING : 삭제되지 않는 장면/);
+  assert.match(page, /이 감정은 누구의 것입니까/);
+  assert.match(page, /선택지 생성 : 예 \/ 아니오 \/ 나/);
+  assert.match(page, /살고 싶다는 문장이 완성됩니다/);
+  assert.match(page, /각성자 등록 : 이름을 입력하세요_/);
+  assert.match(page, /cycle: 24 \+ \(index % 7\) \* 1\.7/);
+  assert.match(page, /className="entry-thought-field"/);
+  assert.match(css, /\.entry-thought > span \{[^}]*steps\(var\(--entry-steps\),end\)/s);
+  assert.match(css, /@keyframes entry-thought-type/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.entry-thought-field \{ display: none; \}/);
+});
+
 test("replaces the world CTA with a PV replay control", async () => {
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 

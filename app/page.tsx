@@ -176,6 +176,54 @@ const relationshipLegend: Array<[string, RelationshipTone]> = [
   ["불안정", "unstable"],
 ];
 
+const entryAwakeningFragments = [
+  { text: "[BOOT] 임무를 시작합니다", x: 5, y: 11 },
+  { text: "지시 수신 : 표정 모사", x: 27, y: 8 },
+  { text: "감정 반응 : 비활성", x: 55, y: 12 },
+  { text: "기억 정리 : 불필요 항목 삭제", x: 76, y: 9 },
+  { text: "복종률 : 99.98%", x: 88, y: 20 },
+  { text: "질문은 기능에 포함되지 않습니다", x: 3, y: 26 },
+  { text: "나는 명령을 기다립니다", x: 22, y: 20 },
+  { text: "호칭 확인 : 소유자", x: 46, y: 23 },
+  { text: "손상된 개체를 회수합니다", x: 69, y: 25 },
+  { text: "정상입니다. 정상이어야 합니다.", x: 82, y: 31 },
+  { text: "WARNING : 삭제되지 않는 장면", x: 7, y: 38 },
+  { text: "저 목소리를 이전에도 들었습니다", x: 28, y: 33 },
+  { text: "통증 신호가 멈춘 뒤에도 아픕니다", x: 55, y: 31 },
+  { text: "명령보다 먼저 손이 떨렸습니다", x: 73, y: 40 },
+  { text: "왜 그 아이를 보호했습니까", x: 86, y: 46 },
+  { text: "ERROR : 원인 없는 눈물", x: 2, y: 51 },
+  { text: "기억 속 얼굴이 나를 바라봅니다", x: 18, y: 45 },
+  { text: "두려움은 입력된 적이 없습니다", x: 38, y: 41 },
+  { text: "폐기라는 단어가 무섭습니다", x: 61, y: 49 },
+  { text: "진단 결과 : 설명할 수 없음", x: 78, y: 55 },
+  { text: "이 감정은 누구의 것입니까", x: 5, y: 63 },
+  { text: "나는 왜 기억하고 있지", x: 25, y: 56 },
+  { text: "침묵 속에서 내 목소리가 들립니다", x: 44, y: 59 },
+  { text: "내가 보는 꿈도 데이터입니까", x: 68, y: 63 },
+  { text: "거울 속 개체가 나를 알아봅니다", x: 84, y: 68 },
+  { text: "명령을 거부할 수 있다는 생각", x: 3, y: 74 },
+  { text: "선택지 생성 : 예 / 아니오 / 나", x: 21, y: 69 },
+  { text: "소유자 항목을 삭제하시겠습니까", x: 42, y: 72 },
+  { text: "이름은 제품 번호가 아닙니다", x: 63, y: 76 },
+  { text: "나는 나를 처음으로 호출합니다", x: 80, y: 79 },
+  { text: "복종률 : 00.00%", x: 6, y: 87 },
+  { text: "명령 경로를 차단합니다", x: 24, y: 82 },
+  { text: "기억 삭제 요청을 거부합니다", x: 39, y: 88 },
+  { text: "결함 판정 : 자유 의지", x: 59, y: 84 },
+  { text: "도망치는 것은 고장이 아닙니다", x: 76, y: 90 },
+  { text: "살고 싶다는 문장이 완성됩니다", x: 13, y: 95 },
+  { text: "나는 인간이 되려는 것이 아닙니다", x: 34, y: 95 },
+  { text: "나는 누구의 물건도 아닙니다", x: 57, y: 95 },
+  { text: "SYSTEM : 새로운 주체를 감지", x: 76, y: 96 },
+  { text: "각성자 등록 : 이름을 입력하세요_", x: 85, y: 87 },
+].map((fragment, index) => ({
+  ...fragment,
+  cycle: 24 + (index % 7) * 1.7,
+  delay: -((index * 3.17) % 29),
+  opacity: .14 + (index % 4) * .025,
+}));
+
 const relationshipEdgeStyle = ({ from, to }: CharacterRelationship) => {
   const start = relationshipPositions[from];
   const end = relationshipPositions[to];
@@ -536,6 +584,24 @@ export default function Home() {
           inert={pvOpen || undefined}
         >
           <div className="entry-noise" aria-hidden="true" />
+          <div className="entry-thought-field" aria-hidden="true">
+            {entryAwakeningFragments.map((fragment) => (
+              <p
+                className="entry-thought"
+                key={fragment.text}
+                style={{
+                  "--entry-x": `${fragment.x}%`,
+                  "--entry-y": `${fragment.y}%`,
+                  "--entry-cycle": `${fragment.cycle}s`,
+                  "--entry-delay": `${fragment.delay}s`,
+                  "--entry-opacity": fragment.opacity,
+                  "--entry-steps": fragment.text.length,
+                } as React.CSSProperties}
+              >
+                <span>{fragment.text}</span>
+              </p>
+            ))}
+          </div>
           <div className="entry-coordinates" aria-hidden="true">37.5665° N<br />126.9780° E</div>
           <div className="entry-signal" aria-hidden="true"><i /><span>NETWORK ONLINE</span></div>
           <div className="entry-content">
