@@ -92,7 +92,8 @@ test("ships Hana-rooted stat and relationship tabs with the supplied relationshi
   assert.match(page, /role="tab"[^>]*>.*등장인물.*CHARACTER FILES/s);
   assert.doesNotMatch(page, /<b>스텟<\/b>|IDENTITY STAT/);
   assert.match(page, /role="tab"[^>]*>.*인물관계도.*RELATIONSHIP TRACE/s);
-  assert.match(page, /RELATIONSHIP CHART \/\/ ROOT : HANA/);
+  assert.match(page, /<span>RELATIONSHIP CHART<\/span>/);
+  assert.doesNotMatch(page, /ROOT : HANA/);
   assert.match(page, /직속 명령 · 로건 생포/);
   assert.match(page, /FIB 파트너 · 상호 긴장/);
   assert.match(page, /추적자 · 숙적/);

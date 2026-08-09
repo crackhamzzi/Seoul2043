@@ -342,7 +342,7 @@ button { color: inherit; }
 
 .relationship-panel { overflow: hidden; border: 1px solid rgba(100,155,174,.25); background: radial-gradient(circle at 50% 36%, rgba(37,200,239,.07), transparent 28%), linear-gradient(150deg, rgba(9,17,25,.98), rgba(4,8,13,.99)); box-shadow: 0 32px 90px rgba(0,0,0,.32); }
 .relationship-panel-head { min-height: 108px; padding: 24px clamp(22px,3vw,40px); display: flex; align-items: center; justify-content: space-between; gap: 30px; border-bottom: 1px solid var(--line); }
-.relationship-panel-head > div:first-child > span { color: var(--cyan); font: 700 10px/1 ui-monospace,monospace; letter-spacing: .17em; }
+.relationship-panel-head > div:first-child > span { color: var(--cyan); font: 750 clamp(14px,1.2vw,18px)/1 ui-monospace,monospace; letter-spacing: .14em; }
 .relationship-panel-head h3 { margin: 11px 0 7px; color: #e1edf0; font-size: clamp(22px,2.2vw,32px); letter-spacing: -.035em; }
 .relationship-panel-head p { margin: 0; color: #6f858e; font-size: 14px; line-height: 1.75; }
 .relationship-legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 30px 51px; max-width: 1290px; }
@@ -420,7 +420,7 @@ button { color: inherit; }
 
 @media (max-width: 620px) {
   .character-view-tabs { width: 100%; }.character-view-tabs button { min-height: 66px; padding: 12px; grid-template-columns: 24px 1fr; }.character-view-tabs button > small { letter-spacing: .05em; }
-  .relationship-panel-head { padding: 22px 18px; }.relationship-legend { gap: 18px 24px; }.relationship-legend span { gap: 10px; font-size: 16px; }.relationship-legend i { width: 36px; height: 4px; }
+  .relationship-panel-head { padding: 22px 18px; }.relationship-panel-head > div:first-child > span { font-size: 13px; }.relationship-legend { gap: 18px 24px; }.relationship-legend span { gap: 10px; font-size: 16px; }.relationship-legend i { width: 36px; height: 4px; }
   .relationship-map { grid-template-columns: repeat(2,minmax(0,1fr)); padding: 12px; gap: 8px; }
   .relationship-inspector-profile { padding: 18px; grid-template-columns: 64px 1fr; }.relationship-inspector-profile > span { width: 64px; height: 64px; }
   .relationship-records { padding: 10px; }

@@ -847,7 +847,7 @@ export default function Home() {
             <section className="relationship-panel" id="character-relations-panel" role="tabpanel" aria-labelledby="character-relations-tab">
               <div className="relationship-panel-head">
                 <div>
-                  <span>RELATIONSHIP CHART // ROOT : HANA</span>
+                  <span>RELATIONSHIP CHART</span>
                   <h3>하나를 중심으로 뻗어 나가는 관계 기록</h3>
                   <p>인물을 선택하면 해당 인물과 연결된 관계선과 기록만 강조됩니다.</p>
                 </div>
