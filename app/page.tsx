@@ -221,7 +221,7 @@ const entryAwakeningFragments = [
   ...fragment,
   cycle: 24 + (index % 7) * 1.7,
   delay: -((index * 3.17) % 29),
-  opacity: .14 + (index % 4) * .025,
+  opacity: .19 + (index % 4) * .03,
 }));
 
 const relationshipEdgeStyle = ({ from, to }: CharacterRelationship) => {
